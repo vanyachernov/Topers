@@ -1,7 +1,15 @@
+using Microsoft.EntityFrameworkCore;
+using Topers.DataAccess.Postgres;
+
 var builder = WebApplication.CreateBuilder(args);
 {
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
+
+    builder.Services.AddDbContext<TopersDbContext>(options =>
+    {
+        options.UseNpgsql(builder.Configuration.GetConnectionString("TopersDbContext"));
+    });
 };
 
 var app = builder.Build();

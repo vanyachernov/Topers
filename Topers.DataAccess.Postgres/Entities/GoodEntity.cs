@@ -1,5 +1,6 @@
 namespace Topers.DataAccess.Postgres.Entities;
 
+using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Http;
 
 /// <summary>
@@ -27,6 +28,7 @@ public class GoodEntity
     /// </summary>
     public string? ImageName { get; set; } = string.Empty;
 
+    [NotMapped]
     /// <summary>
     /// Gets or sets a good image.
     /// </summary>
@@ -47,6 +49,8 @@ public class GoodEntity
     /// </summary>
     public ICollection<GoodScopeEntity> Scopes { get; set; } = [];
     
-    
-    // public ICollection<>
+    /// <summary>
+    /// Gets or sets an order details about good.
+    /// </summary>
+    public ICollection<OrderDetailsEntity>? OrderDetails { get; set; } = [];
 }
