@@ -34,4 +34,9 @@ public class CustomerEntity
     /// Gets or sets a customer address.
     /// </summary>
     public AddressEntity? Address { get; set; }
+
+    /// <summary>
+    /// Gets or sets a customer orders.
+    /// </summary>
+    public ICollection<OrderEntity> Orders { get; set; } = [];
 }
