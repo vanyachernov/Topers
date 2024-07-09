@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Topers.Core.Abstractions;
 using Topers.DataAccess.Postgres;
 using Topers.DataAccess.Postgres.Repositories;
+using Topers.Infrastructure.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 {
@@ -19,6 +20,11 @@ var builder = WebApplication.CreateBuilder(args);
     builder.Services.AddScoped<IAddressesRepository, AddressesRepository>();
     builder.Services.AddScoped<ICustomersRepository, CustomersRepository>();
     builder.Services.AddScoped<IGoodsRepository, GoodsRepository>();
+
+    builder.Services.AddScoped<ICategoriesService, CategoriesService>();
+    builder.Services.AddScoped<IAddressesService, AddressesService>();
+    builder.Services.AddScoped<ICustomersService, CustomersService>();
+    builder.Services.AddScoped<IGoodsService, GoodsService>();
 };
 
 var app = builder.Build();
