@@ -8,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 {
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
+    builder.Services.AddControllers();
 
     builder.Services.AddDbContext<TopersDbContext>(options =>
     {
@@ -41,5 +42,6 @@ var app = builder.Build();
     }
 
     app.UseHttpsRedirection();
+    app.MapControllers();
     app.Run();
 }

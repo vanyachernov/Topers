@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Http;
 /// </summary>
 public class Good
 {
-    public Good(Guid id, Guid categoryId, string name, string description, string imageName, IFormFile image)
+    public Good(Guid id, Guid categoryId, string name, string description, string imageName, IFormFile? image)
     {
         Id = id;
         CategoryId = categoryId;
