@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
+using Topers.Core.Abstractions;
 using Topers.DataAccess.Postgres;
+using Topers.DataAccess.Postgres.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 {
@@ -10,6 +12,13 @@ var builder = WebApplication.CreateBuilder(args);
     {
         options.UseNpgsql(builder.Configuration.GetConnectionString("TopersDbContext"));
     });
+
+    builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+    builder.Services.AddScoped<ICategoriesRepository, CategoriesRepository>();
+    builder.Services.AddScoped<IAddressesRepository, AddressesRepository>();
+    builder.Services.AddScoped<ICustomersRepository, CustomersRepository>();
+    builder.Services.AddScoped<IGoodsRepository, GoodsRepository>();
 };
 
 var app = builder.Build();

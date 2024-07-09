@@ -8,9 +8,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Topers.DataAccess.Postgres\Topers.DataAccess.Postgres.csproj" />
+    <ProjectReference Include="..\Topers.Core\Topers.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.6">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
