@@ -9,6 +9,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Topers.DataAccess.Postgres\Topers.DataAccess.Postgres.csproj" />
     <ProjectReference Include="..\Topers.Core\Topers.Core.csproj" />
+    <ProjectReference Include="..\Topers.Infrastructure\Topers.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>

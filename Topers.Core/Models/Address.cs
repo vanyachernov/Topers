@@ -5,9 +5,10 @@ namespace Topers.Core.Models;
 /// </summary>
 public class Address
 {
-    public Address(Guid id, string street, string city, string state, string postalCode, string country)
+    public Address(Guid id, Guid customerId, string street, string city, string state, string postalCode, string country)
     {
         Id = id;
+        CustomerId = customerId;
         Street = street;
         City = city;
         State = state;
@@ -19,6 +20,11 @@ public class Address
     /// Gets or sets an address identifier.
     /// </summary>
     public Guid Id { get; }
+
+    /// <summary>
+    /// Gets or sets a customer identifier.
+    /// </summary>
+    public Guid CustomerId { get; }
 
     /// <summary>
     /// Gets or sets a customer street.
