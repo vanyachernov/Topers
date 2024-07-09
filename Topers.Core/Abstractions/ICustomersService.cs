@@ -7,5 +7,5 @@ public interface ICustomersService
 {
     Task<List<CustomerResponseDto>> GetAllCustomersAsync();
     Task<CustomerResponseDto> GetCustomerByIdAsync(Guid customerId);
-    Task<Guid> CreateCustomerAsync(Customer customer);
+    Task<CustomerResponseDto> CreateCustomerAsync(Customer customer);
 };

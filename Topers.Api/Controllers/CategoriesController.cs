@@ -73,9 +73,9 @@ public class CategoriesController : ControllerBase
             category.Description
         );
 
-        await _categoryService.CreateCategoryAsync(newCategory);
+        var newCategoryEntity = await _categoryService.CreateCategoryAsync(newCategory);
 
-        return Ok(newCategory);
+        return Ok(newCategoryEntity);
     }
 
     [HttpPut("{categoryId:guid}")]

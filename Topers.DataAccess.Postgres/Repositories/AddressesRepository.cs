@@ -19,6 +19,7 @@ public class AddressesRepository : IAddressesRepository
         var addressEntity = new AddressEntity
         {
             Id = Guid.NewGuid(),
+            CustomerId = address.CustomerId,
             Street = address.Street,
             City = address.City,
             State = address.State,

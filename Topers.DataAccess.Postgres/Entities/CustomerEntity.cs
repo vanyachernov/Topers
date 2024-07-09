@@ -26,11 +26,6 @@ public class CustomerEntity
     public string Phone { get; set; } = string.Empty;
 
     /// <summary>
-    /// Gets or sets a customer address identifier.
-    /// </summary>
-    public Guid AddressId { get; set; }
-
-    /// <summary>
     /// Gets or sets a customer address.
     /// </summary>
     public AddressEntity? Address { get; set; }

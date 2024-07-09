@@ -13,9 +13,5 @@ public class CustomerConfiguration : IEntityTypeConfiguration<CustomerEntity>
             .HasMany(c => c.Orders)
             .WithOne(o => o.Customer)
             .HasForeignKey(o => o.CustomerId);
-        builder
-            .HasOne(c => c.Address)
-            .WithOne(a => a.Customer)
-            .HasForeignKey<CustomerEntity>(c => c.AddressId);
     }
 }

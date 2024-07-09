@@ -16,9 +16,18 @@ public class CategoriesService : ICategoriesService
         _mapper = mapper;
     }
 
-    public async Task<Guid> CreateCategoryAsync(Category category)
+    public async Task<CategoryResponseDto> CreateCategoryAsync(Category category)
     {
-        return await _categoriesRepository.CreateAsync(category);
+        var newCategoryIdentifier = await _categoriesRepository.CreateAsync(category);
+
+        var newCategory = new CategoryResponseDto
+        (
+            newCategoryIdentifier,
+            category.Name,
+            category.Description
+        );
+
+        return newCategory;
     }
 
     public async Task<Guid> DeleteCategoryAsync(Guid categoryId)

@@ -1,4 +1,3 @@
-using AutoMapper;
 using Topers.Core.Abstractions;
 using Topers.Core.Dtos;
 using Topers.Core.Models;
@@ -8,18 +7,27 @@ namespace Topers.Infrastructure.Services;
 public class AddressesService : IAddressesService
 {
     private readonly IAddressesRepository _addressesRepository;
-    private readonly IMapper _mapper;
 
-    public AddressesService(IAddressesRepository addressesRepository, IMapper mapper)
+    public AddressesService(IAddressesRepository addressesRepository)
     {
         _addressesRepository = addressesRepository;
-        _mapper = mapper;
     }
 
     public async Task<AddressResponseDto> AddAddressToCustomerAsync(Address address)
     {
-        var addressEntity = await _addressesRepository.CreateAsync(address);
+        var addressEntityIdentifier = await _addressesRepository.CreateAsync(address);
 
-        return _mapper.Map<AddressResponseDto>(addressEntity);
+        var newAddressEntity = new AddressResponseDto
+        (
+            addressEntityIdentifier,
+            address.CustomerId,
+            address.Street,
+            address.City,
+            address.State,
+            address.PostalCode,
+            address.Country
+        );
+
+        return newAddressEntity;
     }
 }

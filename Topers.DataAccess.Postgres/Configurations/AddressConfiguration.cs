@@ -13,5 +13,6 @@ public class AddressConfiguration : IEntityTypeConfiguration<AddressEntity>
             .HasOne(a => a.Customer)
             .WithOne(c => c.Address)
             .HasForeignKey<AddressEntity>(a => a.CustomerId);
+        builder.HasIndex(a => a.CustomerId).IsUnique(true);
     }
 }

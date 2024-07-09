@@ -3,7 +3,7 @@ namespace Topers.Core.Dtos;
 public record CategoryResponseDto(
     Guid Id,
     string Name = "",
-    string Description = ""
+    string? Description = ""
 );
 
 public record CategoryRequestDto(

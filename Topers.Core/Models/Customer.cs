@@ -5,9 +5,10 @@ namespace Topers.Core.Models;
 /// </summary>
 public class Customer
 {
-    public Customer(Guid id, string name, string email, string phone)
+    public Customer(Guid id, Address? address, string name, string email, string phone)
     {
         Id = id;
+        Address = address;
         Name = name;
         Email = email;
         Phone = phone;
@@ -17,6 +18,11 @@ public class Customer
     /// Gets or sets a customer identifier.
     /// </summary>
     public Guid Id { get; }
+
+    /// <summary>
+    /// Gets or sets a customer address.
+    /// </summary>
+    public Address? Address { get; }
 
     /// <summary>
     /// Gets or sets a customer name.

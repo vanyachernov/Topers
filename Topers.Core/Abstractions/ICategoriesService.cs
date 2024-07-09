@@ -5,7 +5,7 @@ using Topers.Core.Models;
 
 public interface ICategoriesService
 {
-    Task<Guid> CreateCategoryAsync(Category category);
+    Task<CategoryResponseDto> CreateCategoryAsync(Category category);
     Task<List<CategoryResponseDto>> GetAllCategoriesAsync();
     Task<CategoryResponseDto> GetCategoryByIdAsync(Guid categoryId);
     Task<List<GoodResponseDto>> GetGoodsByCategoryIdAsync(Guid categoryId);

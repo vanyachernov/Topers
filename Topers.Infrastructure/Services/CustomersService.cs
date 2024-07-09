@@ -16,9 +16,19 @@ public class CustomersService : ICustomersService
         _mapper = mapper;
     }
 
-    public async Task<Guid> CreateCustomerAsync(Customer customer)
+    public async Task<CustomerResponseDto> CreateCustomerAsync(Customer customer)
     {
-        return await _customersRepository.CreateAsync(customer);
+        var newCustomerIdentifier = await _customersRepository.CreateAsync(customer);
+
+        var newCustomer = new CustomerResponseDto
+        (
+            newCustomerIdentifier,
+            customer.Name,
+            customer.Email,
+            customer.Phone
+        );
+
+        return newCustomer;
     }
 
     public async Task<List<CustomerResponseDto>> GetAllCustomersAsync()

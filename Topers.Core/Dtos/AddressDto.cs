@@ -11,7 +11,6 @@ public record AddressResponseDto(
 );
 
 public record AddressRequestDto(
-    Guid CustomerId,
     string Street = "",
     string City = "",
     string State = "",

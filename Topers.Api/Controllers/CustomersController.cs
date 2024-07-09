@@ -49,13 +49,14 @@ public class CustomersController(ICustomersService customerService) : Controller
         var newCustomer = new Customer
         (
             Guid.Empty,
+            null,
             customer.Name,
             customer.Email,
             customer.Phone
         );
 
-        await _customerService.CreateCustomerAsync(newCustomer);
+        var newCustomerEntity = await _customerService.CreateCustomerAsync(newCustomer);
 
-        return Ok(newCustomer.Id);
+        return Ok(newCustomerEntity);
     }
 }
