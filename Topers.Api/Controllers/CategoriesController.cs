@@ -5,6 +5,7 @@ using Swashbuckle.AspNetCore.Annotations;
 using Topers.Core.Abstractions;
 using Topers.Core.Dtos;
 using Topers.Core.Models;
+using Topers.Core.Validators;
 
 [ApiController]
 [Route("api/categories")]
@@ -66,6 +67,15 @@ public class CategoriesController : ControllerBase
     [SwaggerResponse(200, Description = "Create a new category.")]
     public async Task<ActionResult<CategoryResponseDto>> CreateCategory([FromBody] CategoryRequestDto category)
     {
+        var categoryValidator = new CategoryDtoValidator();
+
+        var categoryValidatorResult = categoryValidator.Validate(category);
+
+        if (!categoryValidatorResult.IsValid) 
+        {
+            return BadRequest(categoryValidatorResult.Errors);
+        }
+        
         var newCategory = new Category
         (
             Guid.Empty,
@@ -82,6 +92,15 @@ public class CategoriesController : ControllerBase
     [SwaggerResponse(200, Description = "Update an existing category.")]
     public async Task<ActionResult<CategoryResponseDto>> UpdateCategory([FromRoute] Guid categoryId, [FromBody] CategoryRequestDto category)
     {
+        var categoryValidator = new CategoryDtoValidator();
+
+        var categoryValidatorResult = categoryValidator.Validate(category);
+
+        if (!categoryValidatorResult.IsValid) 
+        {
+            return BadRequest(categoryValidatorResult.Errors);
+        }
+
         var existCategory = new Category
         (
             categoryId,

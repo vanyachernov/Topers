@@ -5,6 +5,7 @@ using Swashbuckle.AspNetCore.Annotations;
 using Topers.Core.Abstractions;
 using Topers.Core.Dtos;
 using Topers.Core.Models;
+using Topers.Core.Validators;
 
 [ApiController]
 [Route("api/goods")]
@@ -46,6 +47,15 @@ public class GoodsController(IGoodsService goodService) : ControllerBase
     [SwaggerResponse(200, Description = "Create a new good.")]
     public async Task<ActionResult<GoodResponseDto>> CreateGood([FromBody] GoodRequestDto good)
     {
+        var newGoodValidator = new GoodDtoValidator();
+        
+        var newGoodValidatorResult = newGoodValidator.Validate(good);
+
+        if (!newGoodValidatorResult.IsValid)
+        {
+            return BadRequest(newGoodValidatorResult.Errors);
+        }
+
         var newGood = new Good
         (
             Guid.Empty,
@@ -65,6 +75,15 @@ public class GoodsController(IGoodsService goodService) : ControllerBase
     [SwaggerResponse(200, Description = "Update an existing good.")]
     public async Task<ActionResult<GoodResponseDto>> UpdateGood([FromRoute] Guid goodId, [FromBody] GoodRequestDto good)
     {
+        var goodValidator = new GoodDtoValidator();
+        
+        var goodValidatorResult = goodValidator.Validate(good);
+
+        if (!goodValidatorResult.IsValid)
+        {
+            return BadRequest(goodValidatorResult.Errors);
+        }
+
         var existGood = new Good
         (
             goodId,
