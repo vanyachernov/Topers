@@ -15,6 +15,7 @@ public class AddressesController(IAddressesService addressesService) : Controlle
 
     [HttpPost("{customerId:guid}")]
     [SwaggerResponse(200, Description = "Returns the new address data of the customer.", Type = typeof(AddressResponseDto))]
+    [SwaggerResponse(400, Description = "There are some errors in the model.")]
     public async Task<ActionResult<AddressResponseDto>> AddAddressToCustomer([FromRoute] Guid customerId, [FromBody] AddressRequestDto address)
     {
         var newAddressValidator = new AddressDtoValidator();

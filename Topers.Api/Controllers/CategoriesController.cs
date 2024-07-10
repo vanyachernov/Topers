@@ -20,7 +20,7 @@ public class CategoriesController : ControllerBase
 
     [HttpGet]
     [SwaggerResponse(200, Description = "Returns a category list.", Type = typeof(IEnumerable<CategoryResponseDto>))]
-    [SwaggerResponse(400)]
+    [SwaggerResponse(400, Description = "Categories not found.")]
     public async Task<ActionResult<List<CategoryResponseDto>>> GetCategories()
     {
         var categories = await _categoryService.GetAllCategoriesAsync();
@@ -35,7 +35,7 @@ public class CategoriesController : ControllerBase
 
     [HttpGet("{categoryId:guid}")]
     [SwaggerResponse(200, Description = "Returns a category.", Type = typeof(CategoryResponseDto))]
-    [SwaggerResponse(400)]
+    [SwaggerResponse(400, Description = "Category not found.")]
     public async Task<ActionResult<CategoryResponseDto>> GetCategory([FromRoute] Guid categoryId)
     {
         var category = await _categoryService.GetCategoryByIdAsync(categoryId);
@@ -50,7 +50,7 @@ public class CategoriesController : ControllerBase
 
     [HttpGet("{categoryId:guid}/goods")]
     [SwaggerResponse(200, Description = "Returns a category goods.", Type = typeof(IEnumerable<GoodResponseDto>))]
-    [SwaggerResponse(400)]
+    [SwaggerResponse(400, Description = "Goods not found.")]
     public async Task<ActionResult<List<GoodResponseDto>>> GetCategoryGoods([FromRoute] Guid categoryId)
     {
         var goods = await _categoryService.GetGoodsByCategoryIdAsync(categoryId);
@@ -65,6 +65,7 @@ public class CategoriesController : ControllerBase
 
     [HttpPost("create")]
     [SwaggerResponse(200, Description = "Create a new category.")]
+    [SwaggerResponse(400, Description = "There are some errors in the model.")]
     public async Task<ActionResult<CategoryResponseDto>> CreateCategory([FromBody] CategoryRequestDto category)
     {
         var categoryValidator = new CategoryDtoValidator();
@@ -90,6 +91,7 @@ public class CategoriesController : ControllerBase
 
     [HttpPut("{categoryId:guid}")]
     [SwaggerResponse(200, Description = "Update an existing category.")]
+    [SwaggerResponse(400, Description = "There are some errors in the model.")]
     public async Task<ActionResult<CategoryResponseDto>> UpdateCategory([FromRoute] Guid categoryId, [FromBody] CategoryRequestDto category)
     {
         var categoryValidator = new CategoryDtoValidator();

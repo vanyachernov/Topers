@@ -15,7 +15,7 @@ public class GoodsController(IGoodsService goodService) : ControllerBase
 
     [HttpGet]
     [SwaggerResponse(200, Description = "Returns a good list.", Type = typeof(IEnumerable<GoodResponseDto>))]
-    [SwaggerResponse(400)]
+    [SwaggerResponse(400, Description = "Goods not found.")]
     public async Task<ActionResult<List<GoodResponseDto>>> GetGoods()
     {
         var goods = await _goodService.GetAllGoodsAsync();
@@ -30,7 +30,7 @@ public class GoodsController(IGoodsService goodService) : ControllerBase
 
     [HttpGet("{goodId:guid}")]
     [SwaggerResponse(200, Description = "Returns a good.", Type = typeof(GoodResponseDto))]
-    [SwaggerResponse(400)]
+    [SwaggerResponse(400, Description = "Good not found.")]
     public async Task<ActionResult<GoodResponseDto>> GetGood([FromRoute] Guid goodId)
     {
         var good = await _goodService.GetGoodByIdAsync(goodId);
@@ -45,6 +45,7 @@ public class GoodsController(IGoodsService goodService) : ControllerBase
 
     [HttpPost("create")]
     [SwaggerResponse(200, Description = "Create a new good.")]
+    [SwaggerResponse(400, Description = "There are some errors in the model.")]
     public async Task<ActionResult<GoodResponseDto>> CreateGood([FromBody] GoodRequestDto good)
     {
         var newGoodValidator = new GoodDtoValidator();
@@ -73,6 +74,7 @@ public class GoodsController(IGoodsService goodService) : ControllerBase
 
     [HttpPut("{goodId:guid}")]
     [SwaggerResponse(200, Description = "Update an existing good.")]
+    [SwaggerResponse(400, Description = "There are some errors in the model.")]
     public async Task<ActionResult<GoodResponseDto>> UpdateGood([FromRoute] Guid goodId, [FromBody] GoodRequestDto good)
     {
         var goodValidator = new GoodDtoValidator();

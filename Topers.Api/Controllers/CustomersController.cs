@@ -15,7 +15,7 @@ public class CustomersController(ICustomersService customerService) : Controller
 
     [HttpGet]
     [SwaggerResponse(200, Description = "Returns a customer list.", Type = typeof(IEnumerable<CustomerResponseDto>))]
-    [SwaggerResponse(400)]
+    [SwaggerResponse(400, Description = "Customers not found.")]
     public async Task<ActionResult<List<CustomerResponseDto>>> GetCustomers()
     {
         var customers = await _customerService.GetAllCustomersAsync();
@@ -30,7 +30,7 @@ public class CustomersController(ICustomersService customerService) : Controller
 
     [HttpGet("{customerId:guid}")]
     [SwaggerResponse(200, Description = "Returns a customer.", Type = typeof(CustomerResponseDto))]
-    [SwaggerResponse(400)]
+    [SwaggerResponse(400, Description = "Customer not found.")]
     public async Task<ActionResult<CustomerResponseDto>> GetCustomerById([FromRoute] Guid customerId)
     {
         var customer = await _customerService.GetCustomerByIdAsync(customerId);
@@ -45,6 +45,7 @@ public class CustomersController(ICustomersService customerService) : Controller
 
     [HttpPost("create")]
     [SwaggerResponse(200, Description = "Create a new customer.")]
+    [SwaggerResponse(400, Description = "There are some errors in the model.")]
     public async Task<ActionResult<Guid>> CreateCustomer([FromBody] CustomerRequestDto customer)
     {
         var newCustomerValidator = new CustomerDtoValidator();
