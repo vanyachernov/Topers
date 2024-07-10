@@ -5,6 +5,7 @@ using Swashbuckle.AspNetCore.Annotations;
 using Topers.Core.Abstractions;
 using Topers.Core.Dtos;
 using Topers.Core.Models;
+using Topers.Core.Validators;
 
 [ApiController]
 [Route("api/customers")]
@@ -46,6 +47,15 @@ public class CustomersController(ICustomersService customerService) : Controller
     [SwaggerResponse(200, Description = "Create a new customer.")]
     public async Task<ActionResult<Guid>> CreateCustomer([FromBody] CustomerRequestDto customer)
     {
+        var newCustomerValidator = new CustomerDtoValidator();
+        
+        var newCustomerValidatorResult = newCustomerValidator.Validate(customer);
+
+        if (!newCustomerValidatorResult.IsValid)
+        {
+            return BadRequest(newCustomerValidatorResult.Errors);
+        }
+
         var newCustomer = new Customer
         (
             Guid.Empty,
