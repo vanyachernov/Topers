@@ -1,5 +1,7 @@
 namespace Topers.Api.Controllers;
 
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using Topers.Core.Abstractions;
@@ -33,6 +35,7 @@ public class CategoriesController : ControllerBase
         return Ok(categories);
     }
 
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [HttpGet("{categoryId:guid}")]
     [SwaggerResponse(200, Description = "Returns a category.", Type = typeof(CategoryResponseDto))]
     [SwaggerResponse(400, Description = "Category not found.")]
@@ -48,6 +51,7 @@ public class CategoriesController : ControllerBase
         return Ok(category);
     }
 
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [HttpGet("{categoryId:guid}/goods")]
     [SwaggerResponse(200, Description = "Returns a category goods.", Type = typeof(IEnumerable<GoodResponseDto>))]
     [SwaggerResponse(400, Description = "Goods not found.")]

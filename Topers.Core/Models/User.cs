@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Http;
+
 namespace Topers.Core.Models;
 
 /// <summary>
@@ -5,15 +7,36 @@ namespace Topers.Core.Models;
 /// </summary>
 public class User
 {
-    public User() { }
+    private User(Guid id, string username, string passwordHash, string email) 
+    {
+        Id = id;
+        Username = username;
+        PasswordHash = passwordHash;
+        Email = email;
+    }
 
     /// <summary>
-    /// Gets a username.
+    /// Gets or sets a user identifier.
     /// </summary>
-    public string Username { get; set; } = string.Empty;
+    public Guid Id { get; set;}
 
     /// <summary>
-    /// Gets a hash password.
+    /// Gets a user name.
     /// </summary>
-    public string PasswordHash { get; set; } = string.Empty;
+    public string Username { get; } = string.Empty;
+
+    /// <summary>
+    /// Gets a user hash password.
+    /// </summary>
+    public string PasswordHash { get; } = string.Empty;
+
+    /// <summary>
+    /// Gets a user email.
+    /// </summary>
+    public string Email { get; } = string.Empty;
+
+    public static User Create(Guid id, string username, string passwordHash, string email)
+    {
+        return new User(id, username, passwordHash, email);
+    }
 }

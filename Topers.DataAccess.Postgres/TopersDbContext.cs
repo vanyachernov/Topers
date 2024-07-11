@@ -6,6 +6,7 @@ using Topers.DataAccess.Postgres.Entities;
 
 public class TopersDbContext(DbContextOptions<TopersDbContext> options) : DbContext(options)
 {
+    public DbSet<UserEntity> Users { get; set; }
     public DbSet<CategoryEntity> Categories { get; set; }
     public DbSet<GoodEntity> Goods { get; set; }
     public DbSet<GoodScopeEntity> GoodScopes { get; set; }
