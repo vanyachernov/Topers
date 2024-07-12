@@ -62,9 +62,7 @@ public class GoodsController(IGoodsService goodService) : ControllerBase
             Guid.Empty,
             good.CategoryId,
             good.Name,
-            good.Description,
-            good.ImageName,
-            good.Image
+            good.Description
         );
 
         await _goodService.CreateGoodAsync(newGood);
@@ -91,9 +89,7 @@ public class GoodsController(IGoodsService goodService) : ControllerBase
             goodId,
             good.CategoryId,
             good.Name,
-            good.Description,
-            good.ImageName,
-            good.Image
+            good.Description
         );
 
         var updatedGood = await _goodService.UpdateGoodAsync(existGood);

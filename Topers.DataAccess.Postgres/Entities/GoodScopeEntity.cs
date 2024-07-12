@@ -29,4 +29,9 @@ public class GoodScopeEntity
     /// Gets or sets the price.
     /// </summary>
     public decimal Price { get; set; }
+
+    /// <summary>
+    /// Gets or sets a good image.
+    /// </summary>
+    public string? Image { get; set; } = string.Empty;
 }
