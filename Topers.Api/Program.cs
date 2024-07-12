@@ -2,13 +2,54 @@ using Microsoft.EntityFrameworkCore;
 using Topers.Core.Abstractions;
 using Topers.DataAccess.Postgres;
 using Topers.DataAccess.Postgres.Repositories;
+using Topers.Infrastructure.Features;
 using Topers.Infrastructure.Services;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using System.Text;
+using Microsoft.AspNetCore.CookiePolicy;
 
 var builder = WebApplication.CreateBuilder(args);
 {
+    var jwtOptionsSection = builder.Configuration.GetSection(nameof(JwtOptions));
+    var cookieOptionsSection = builder.Configuration.GetSection(nameof(CookiesOptions));
+    var cookieName = cookieOptionsSection.GetValue<string>("Name")!;
+
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
     builder.Services.AddControllers();
+
+    builder.Services.Configure<JwtOptions>(jwtOptionsSection);
+    builder.Services.Configure<CookiesOptions>(cookieOptionsSection);
+
+    builder.Services.AddAuthentication(options =>
+    {
+        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    }).AddJwtBearer(options =>
+        {
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuer = false,
+                ValidateAudience = false,
+                ValidateLifetime = true,
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(
+                    Encoding.UTF8.GetBytes(jwtOptionsSection.GetValue<string>("SecretKey")!))
+            };
+
+            options.Events = new JwtBearerEvents
+            {
+                OnMessageReceived = context => 
+                {
+                    context.Token = context.Request.Cookies[cookieName];
+                    
+                    return Task.CompletedTask;
+                }
+            };
+        });
+
+    builder.Services.AddAuthorization();
 
     builder.Services.AddDbContext<TopersDbContext>(options =>
     {
@@ -21,11 +62,16 @@ var builder = WebApplication.CreateBuilder(args);
     builder.Services.AddScoped<IAddressesRepository, AddressesRepository>();
     builder.Services.AddScoped<ICustomersRepository, CustomersRepository>();
     builder.Services.AddScoped<IGoodsRepository, GoodsRepository>();
+    builder.Services.AddScoped<IUsersRepository, UsersRepository>();
 
     builder.Services.AddScoped<ICategoriesService, CategoriesService>();
     builder.Services.AddScoped<IAddressesService, AddressesService>();
     builder.Services.AddScoped<ICustomersService, CustomersService>();
     builder.Services.AddScoped<IGoodsService, GoodsService>();
+    builder.Services.AddScoped<IUsersService, UsersService>();
+
+    builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
+    builder.Services.AddScoped<IJwtProvider, JwtProvider>();
 };
 
 var app = builder.Build();
@@ -42,6 +88,14 @@ var app = builder.Build();
     }
 
     app.UseHttpsRedirection();
+    app.UseCookiePolicy(new CookiePolicyOptions
+    {
+        MinimumSameSitePolicy = SameSiteMode.Strict,
+        HttpOnly = HttpOnlyPolicy.Always,
+        Secure = CookieSecurePolicy.Always
+    });
+    app.UseAuthentication();
+    app.UseAuthorization();
     app.MapControllers();
     app.Run();
 }

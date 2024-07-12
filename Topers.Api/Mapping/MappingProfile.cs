@@ -31,6 +31,8 @@ public class MappingProfile : Profile
         CreateMap<Category, CategoryEntity>();
         CreateMap<GoodEntity, Good>();
         CreateMap<Good, GoodEntity>();
+        CreateMap<UserEntity, User>();
+        CreateMap<User, UserEntity>();
 
         CreateMap<Customer, CustomerEntity>()
             .ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.Address));
