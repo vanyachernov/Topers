@@ -1,17 +1,23 @@
 namespace Topers.Api.Contollers;
 
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Swashbuckle.AspNetCore.Annotations;
 using Topers.Core.Abstractions;
 using Topers.Core.Dtos;
 using Topers.Core.Models;
 using Topers.Core.Validators;
+using Topers.DataAccess.Postgres.Entities;
+using Topers.Infrastructure.Features;
 
 [ApiController]
 [Route("api/goods")]
-public class GoodsController(IGoodsService goodService) : ControllerBase
+public class GoodsController(
+    IGoodsService goodService,
+    IFileService fileService) : ControllerBase
 {
     private readonly IGoodsService _goodService = goodService;
+    private readonly IFileService _fileService = fileService;
 
     [HttpGet]
     [SwaggerResponse(200, Description = "Returns a good list.", Type = typeof(IEnumerable<GoodResponseDto>))]
@@ -49,7 +55,7 @@ public class GoodsController(IGoodsService goodService) : ControllerBase
     public async Task<ActionResult<GoodResponseDto>> CreateGood([FromBody] GoodRequestDto good)
     {
         var newGoodValidator = new GoodDtoValidator();
-        
+
         var newGoodValidatorResult = newGoodValidator.Validate(good);
 
         if (!newGoodValidatorResult.IsValid)
@@ -65,9 +71,9 @@ public class GoodsController(IGoodsService goodService) : ControllerBase
             good.Description
         );
 
-        await _goodService.CreateGoodAsync(newGood);
+        var newGoodEntity = await _goodService.CreateGoodAsync(newGood);
 
-        return Ok(newGood);
+        return Ok(newGoodEntity);
     }
 
     [HttpPut("{goodId:guid}")]
@@ -76,7 +82,7 @@ public class GoodsController(IGoodsService goodService) : ControllerBase
     public async Task<ActionResult<GoodResponseDto>> UpdateGood([FromRoute] Guid goodId, [FromBody] GoodRequestDto good)
     {
         var goodValidator = new GoodDtoValidator();
-        
+
         var goodValidatorResult = goodValidator.Validate(good);
 
         if (!goodValidatorResult.IsValid)
@@ -104,5 +110,39 @@ public class GoodsController(IGoodsService goodService) : ControllerBase
         await _goodService.DeleteGoodAsync(goodId);
 
         return Ok(goodId);
+    }
+
+    [HttpPost("{goodId:guid}/addScope")]
+    public async Task<ActionResult<Guid>> AddGoodScope([FromRoute] Guid goodId, [FromForm] GoodScopeRequestDto scope)
+    {
+        if (scope.Image == null)
+        {
+            return BadRequest("Good image not found!");
+        }
+
+        Guid imageGuid = Guid.Empty;
+
+        var fileResult = _fileService.SaveImage(scope.Image);
+
+        if (fileResult.Item1 == 1)
+        {
+            var imageNameWithoutExtension = Path.GetFileNameWithoutExtension(fileResult.Item2);
+
+            imageGuid = Guid.Parse(imageNameWithoutExtension);
+
+            scope = scope with { ImageName = fileResult.Item2 };
+        }
+
+        var scopeModel = new GoodScope(
+            Guid.Empty,
+            goodId,
+            scope.Litre,
+            scope.Price,
+            scope.ImageName
+        );
+
+        await _goodService.AddGoodScopeAsync(scopeModel);
+
+        return Ok(imageGuid);
     }
 }

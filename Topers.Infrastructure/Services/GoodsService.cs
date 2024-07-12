@@ -16,9 +16,19 @@ public class GoodsService : IGoodsService
         _mapper = mapper;
     }
 
-    public async Task<Guid> CreateGoodAsync(Good good)
+    public async Task<GoodResponseDto> CreateGoodAsync(Good good)
     {
-        return await _goodsRepository.CreateAsync(good);
+        var newGoodIdentifier = await _goodsRepository.CreateAsync(good);
+
+        var newGood = new GoodResponseDto
+        (
+            newGoodIdentifier,
+            good.Name,
+            good.Description,
+            null
+        );
+
+        return newGood;
     }
 
     public async Task<Guid> DeleteGoodAsync(Guid goodId)
@@ -39,5 +49,10 @@ public class GoodsService : IGoodsService
     public async Task<Guid> UpdateGoodAsync(Good good)
     {
         return await _goodsRepository.UpdateAsync(good);
+    }
+
+    public async Task<Guid> AddGoodScopeAsync(GoodScope scope)
+    {
+        return await _goodsRepository.AddScopeAsync(scope);
     }
 }

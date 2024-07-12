@@ -89,4 +89,21 @@ public class GoodsRepository : IGoodsRepository
 
         return good.Id;
     }
+
+    public async Task<Guid> AddScopeAsync(GoodScope goodScope)
+    {
+        var scopeEntity = new GoodScopeEntity
+        {
+            Id = Guid.NewGuid(),
+            GoodId = goodScope.GoodId,
+            Litre = goodScope.Litre,
+            Price = goodScope.Price,
+            Image = goodScope.Image
+        };
+
+        await _context.GoodScopes.AddAsync(scopeEntity);
+        await _context.SaveChangesAsync();
+
+        return scopeEntity.Id;
+    }
 }

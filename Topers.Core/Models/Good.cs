@@ -1,5 +1,6 @@
 namespace Topers.Core.Models;
 
+using System.Collections;
 using Microsoft.AspNetCore.Http;
 
 /// <summary>
@@ -13,6 +14,7 @@ public class Good
         CategoryId = categoryId;
         Name = name;
         Description = description;
+        Scopes = [];
     }
 
     /// <summary>
@@ -34,4 +36,9 @@ public class Good
     /// Gets or sets a good description.
     /// </summary>
     public string? Description { get; } = string.Empty;
+
+    /// <summary>
+    ///  Gets or sets a good scopes.
+    /// </summary>
+    public ICollection<GoodScope>? Scopes { get; }
 }

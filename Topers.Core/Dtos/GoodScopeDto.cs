@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Http;
 
 namespace Topers.Core.Dtos;
@@ -12,8 +13,8 @@ public record GoodScopeResponseDto(
 );
 
 public record GoodScopeRequestDto(
-    Guid GoodId,
-    int Litre,
-    decimal Price,
+    [Required] int Litre,
+    [Required] decimal Price,
+    string? ImageName = "",
     IFormFile? Image = null
 );

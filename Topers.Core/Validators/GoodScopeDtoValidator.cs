@@ -7,9 +7,6 @@ public class GoodScopeDtoValidator : AbstractValidator<GoodScopeRequestDto>
 {
     public GoodScopeDtoValidator()
     {
-        RuleFor(g => g.GoodId)
-            .NotEmpty().WithMessage("{PropertyName} is required!")
-            .NotNull();
         RuleFor(g => g.Litre)
             .Must(IsLitreValid).WithMessage("Litre must be one of the following values: 1, 5, 10, 15, 25, 1000!");
         RuleFor(g => g.Price)

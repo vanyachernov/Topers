@@ -5,12 +5,13 @@ namespace Topers.Core.Models;
 /// </summary>
 public class GoodScope
 {
-    public GoodScope(Guid id, Guid goodId, int litre, decimal price)
+    public GoodScope(Guid id, Guid goodId, int litre, decimal price, string? image)
     {
         Id = id;
         GoodId = goodId;
         Litre = litre;
         Price = price;
+        Image = image;
     }
 
     /// <summary>
@@ -32,4 +33,9 @@ public class GoodScope
     /// Gets or sets the price.
     /// </summary>
     public decimal Price { get; }
+
+    /// <summary>
+    /// Gets or sets the image.
+    /// </summary>
+    public string? Image { get; }
 }
