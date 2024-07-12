@@ -7,6 +7,7 @@ using Topers.Infrastructure.Services;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Text;
+using Microsoft.AspNetCore.CookiePolicy;
 
 var builder = WebApplication.CreateBuilder(args);
 {
@@ -87,6 +88,12 @@ var app = builder.Build();
     }
 
     app.UseHttpsRedirection();
+    app.UseCookiePolicy(new CookiePolicyOptions
+    {
+        MinimumSameSitePolicy = SameSiteMode.Strict,
+        HttpOnly = HttpOnlyPolicy.Always,
+        Secure = CookieSecurePolicy.Always
+    });
     app.UseAuthentication();
     app.UseAuthorization();
     app.MapControllers();
