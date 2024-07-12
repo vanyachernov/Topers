@@ -1,5 +1,6 @@
 namespace Topers.Core.Models;
 
+using System.Collections;
 using Microsoft.AspNetCore.Http;
 
 /// <summary>
@@ -7,14 +8,13 @@ using Microsoft.AspNetCore.Http;
 /// </summary>
 public class Good
 {
-    public Good(Guid id, Guid categoryId, string name, string description, string imageName, IFormFile? image)
+    public Good(Guid id, Guid categoryId, string name, string description)
     {
         Id = id;
         CategoryId = categoryId;
         Name = name;
         Description = description;
-        ImageName = imageName;
-        Image = image;
+        Scopes = [];
     }
 
     /// <summary>
@@ -38,12 +38,7 @@ public class Good
     public string? Description { get; } = string.Empty;
 
     /// <summary>
-    /// Gets or sets a good image name file.
+    ///  Gets or sets a good scopes.
     /// </summary>
-    public string? ImageName { get; } = string.Empty;
-
-    /// <summary>
-    /// Gets or sets a good image.
-    /// </summary>
-    public IFormFile? Image { get; }
+    public ICollection<GoodScope>? Scopes { get; }
 }

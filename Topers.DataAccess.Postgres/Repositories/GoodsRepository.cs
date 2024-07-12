@@ -24,9 +24,7 @@ public class GoodsRepository : IGoodsRepository
             Id = Guid.NewGuid(),
             CategoryId = good.CategoryId,
             Name = good.Name,
-            Description = good.Description,
-            ImageName = good.ImageName,
-            Image = good.Image
+            Description = good.Description
         };
 
         await _context.Goods.AddAsync(goodEntity);
@@ -87,10 +85,25 @@ public class GoodsRepository : IGoodsRepository
             .ExecuteUpdateAsync(s => s
                 .SetProperty(g => g.Name, good.Name)
                 .SetProperty(g => g.CategoryId, good.CategoryId)
-                .SetProperty(g => g.Description, good.Description)
-                .SetProperty(g => g.ImageName, good.ImageName)
-                .SetProperty(g => g.Image, good.Image));
+                .SetProperty(g => g.Description, good.Description));
 
         return good.Id;
+    }
+
+    public async Task<Guid> AddScopeAsync(GoodScope goodScope)
+    {
+        var scopeEntity = new GoodScopeEntity
+        {
+            Id = Guid.NewGuid(),
+            GoodId = goodScope.GoodId,
+            Litre = goodScope.Litre,
+            Price = goodScope.Price,
+            Image = goodScope.Image
+        };
+
+        await _context.GoodScopes.AddAsync(scopeEntity);
+        await _context.SaveChangesAsync();
+
+        return scopeEntity.Id;
     }
 }

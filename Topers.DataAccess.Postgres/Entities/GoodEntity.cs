@@ -1,8 +1,5 @@
 namespace Topers.DataAccess.Postgres.Entities;
 
-using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.AspNetCore.Http;
-
 /// <summary>
 /// Represents a good entity.
 /// </summary>
@@ -22,17 +19,6 @@ public class GoodEntity
     /// Gets or sets a good description.
     /// </summary>
     public string? Description { get; set; }
-
-    /// <summary>
-    /// Gets or sets a good image name file.
-    /// </summary>
-    public string? ImageName { get; set; } = string.Empty;
-
-    [NotMapped]
-    /// <summary>
-    /// Gets or sets a good image.
-    /// </summary>
-    public IFormFile? Image { get; set; }
 
     /// <summary>
     /// Gets or sets a good category identifier.

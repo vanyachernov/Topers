@@ -15,7 +15,7 @@ public class MappingProfile : Profile
         CreateMap<Address, AddressResponseDto>();
 
         CreateMap<Customer, CustomerResponseDto>()
-            .ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.Address != null ? new AddressResponseDto (
+            .ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.Address != null ? new AddressResponseDto(
                 src.Address.Id,
                 src.Id,
                 src.Address.Street,
@@ -29,8 +29,28 @@ public class MappingProfile : Profile
 
         CreateMap<CategoryEntity, Category>();
         CreateMap<Category, CategoryEntity>();
-        CreateMap<GoodEntity, Good>();
-        CreateMap<Good, GoodEntity>();
+
+        CreateMap<GoodScopeEntity, GoodScope>();
+        CreateMap<GoodScope, GoodScopeEntity>();
+
+        CreateMap<GoodEntity, Good>()
+            .ForMember(dest => dest.Scopes, opt => opt.MapFrom(src => src.Scopes != null ? src.Scopes : new List<GoodScopeEntity>()));
+        CreateMap<Good, GoodEntity>()
+            .ForMember(dest => dest.Scopes, opt => opt.MapFrom(src => src.Scopes != null ? src.Scopes : new List<GoodScope>()));
+
+        CreateMap<Good, GoodResponseDto>()
+            .ForMember(dest => dest.Scopes, opt => opt.MapFrom(src =>
+                src.Scopes != null
+                    ? src.Scopes.Select(scope => new GoodScopeResponseDto(
+                        scope.Id,
+                        scope.GoodId,
+                        scope.Litre,
+                        scope.Price,
+                        scope.Image,
+                        null
+                    )).ToList()
+                    : new List<GoodScopeResponseDto>()));
+        
         CreateMap<UserEntity, User>();
         CreateMap<User, UserEntity>();
 

@@ -1,3 +1,6 @@
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Http;
+
 namespace Topers.DataAccess.Postgres.Entities;
 
 /// <summary>
@@ -29,4 +32,15 @@ public class GoodScopeEntity
     /// Gets or sets the price.
     /// </summary>
     public decimal Price { get; set; }
+
+    /// <summary>
+    /// Gets or sets a good image.
+    /// </summary>
+    public string? Image { get; set; } = string.Empty;
+
+    [NotMapped]
+    /// <summary>
+    /// Gets or sets a good image file.
+    /// </summary>
+    public IFormFile? ImageFile { get; set; }
 }

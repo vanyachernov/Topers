@@ -8,6 +8,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Text;
 using Microsoft.AspNetCore.CookiePolicy;
+using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 {
@@ -72,6 +73,7 @@ var builder = WebApplication.CreateBuilder(args);
 
     builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
     builder.Services.AddScoped<IJwtProvider, JwtProvider>();
+    builder.Services.AddScoped<IFileService, FileService>();
 };
 
 var app = builder.Build();
@@ -88,6 +90,13 @@ var app = builder.Build();
     }
 
     app.UseHttpsRedirection();
+    app.UseStaticFiles(new StaticFileOptions
+    {
+        FileProvider = new PhysicalFileProvider(
+            Path.Combine(builder.Environment.ContentRootPath, "Uploads")
+        ),
+        RequestPath = "/Resources"
+    });
     app.UseCookiePolicy(new CookiePolicyOptions
     {
         MinimumSameSitePolicy = SameSiteMode.Strict,
