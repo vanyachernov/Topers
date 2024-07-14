@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace Topers.Core.Dtos;
 
 public record CustomerResponseDto(

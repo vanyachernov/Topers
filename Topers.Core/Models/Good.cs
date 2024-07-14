@@ -14,7 +14,7 @@ public class Good
         CategoryId = categoryId;
         Name = name;
         Description = description;
-        Scopes = [];
+        Scopes = new List<GoodScope>();
     }
 
     /// <summary>

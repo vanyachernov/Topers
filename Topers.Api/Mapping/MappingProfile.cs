@@ -38,6 +38,12 @@ public class MappingProfile : Profile
         CreateMap<Good, GoodEntity>()
             .ForMember(dest => dest.Scopes, opt => opt.MapFrom(src => src.Scopes != null ? src.Scopes : new List<GoodScope>()));
 
+        CreateMap<GoodScope, GoodScopeResponseDto>()
+            .ForMember(dest => dest.ImageName, opt => opt.MapFrom(src => src.ImageName));
+
+        CreateMap<Good, GoodResponseDto>()
+            .ForMember(dest => dest.Scopes, opt => opt.MapFrom(src => src.Scopes != null ? src.Scopes : new List<GoodScope>()));
+
         CreateMap<Good, GoodResponseDto>()
             .ForMember(dest => dest.Scopes, opt => opt.MapFrom(src =>
                 src.Scopes != null
@@ -46,8 +52,7 @@ public class MappingProfile : Profile
                         scope.GoodId,
                         scope.Litre,
                         scope.Price,
-                        scope.Image,
-                        null
+                        scope.ImageName
                     )).ToList()
                     : new List<GoodScopeResponseDto>()));
         

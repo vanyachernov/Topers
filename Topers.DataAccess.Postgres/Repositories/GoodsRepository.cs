@@ -45,6 +45,7 @@ public class GoodsRepository : IGoodsRepository
     public async Task<List<Good>> GetAllAsync()
     {
         var goodEntities = await _context.Goods
+            .Include(g => g.Scopes)
             .AsNoTracking()
             .ToListAsync();
 
@@ -98,7 +99,7 @@ public class GoodsRepository : IGoodsRepository
             GoodId = goodScope.GoodId,
             Litre = goodScope.Litre,
             Price = goodScope.Price,
-            Image = goodScope.Image
+            Image = goodScope.ImageName
         };
 
         await _context.GoodScopes.AddAsync(scopeEntity);

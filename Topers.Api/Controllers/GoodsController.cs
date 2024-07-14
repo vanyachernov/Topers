@@ -115,21 +115,15 @@ public class GoodsController(
     [HttpPost("{goodId:guid}/addScope")]
     public async Task<ActionResult<Guid>> AddGoodScope([FromRoute] Guid goodId, [FromForm] GoodScopeRequestDto scope)
     {
-        if (scope.Image == null)
+        if (scope.ImageFile == null)
         {
             return BadRequest("Good image not found!");
         }
 
-        Guid imageGuid = Guid.Empty;
-
-        var fileResult = _fileService.SaveImage(scope.Image);
+        var fileResult = _fileService.SaveImage(scope.ImageFile);
 
         if (fileResult.Item1 == 1)
         {
-            var imageNameWithoutExtension = Path.GetFileNameWithoutExtension(fileResult.Item2);
-
-            imageGuid = Guid.Parse(imageNameWithoutExtension);
-
             scope = scope with { ImageName = fileResult.Item2 };
         }
 
@@ -141,8 +135,8 @@ public class GoodsController(
             scope.ImageName
         );
 
-        await _goodService.AddGoodScopeAsync(scopeModel);
+        var newScopeIdentifier = await _goodService.AddGoodScopeAsync(scopeModel);
 
-        return Ok(imageGuid);
+        return Ok(newScopeIdentifier);
     }
 }

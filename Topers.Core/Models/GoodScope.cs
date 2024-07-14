@@ -11,7 +11,7 @@ public class GoodScope
         GoodId = goodId;
         Litre = litre;
         Price = price;
-        Image = image;
+        ImageName = image;
     }
 
     /// <summary>
@@ -37,5 +37,5 @@ public class GoodScope
     /// <summary>
     /// Gets or sets the image.
     /// </summary>
-    public string? Image { get; }
+    public string? ImageName { get; }
 }
