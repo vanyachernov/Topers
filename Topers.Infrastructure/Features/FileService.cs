@@ -51,9 +51,7 @@ public class FileService : IFileService
             var newFileName = uniqueString + ext;
             var fileWithPath = Path.Combine(path, newFileName);
             var stream = new FileStream(fileWithPath, FileMode.Create);
-
             imageFile.CopyTo(stream);
-
             stream.Close();
 
             return new Tuple<int, string>(1, newFileName);

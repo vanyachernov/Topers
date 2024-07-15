@@ -10,5 +10,7 @@ public interface IGoodsRepository
     Task<List<Good>> GetByFilterAsync(string title);
     Task<Guid> UpdateAsync(Good good);
     Task<Guid> DeleteAsync(Guid goodId);
+    Task<GoodScope> GetScopeAsync(Guid goodId, int litre);
     Task<Guid> AddScopeAsync(GoodScope goodScope);
+    Task<Guid> UpdateScopeAsync(GoodScope goodScope);
 };

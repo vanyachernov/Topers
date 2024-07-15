@@ -55,4 +55,16 @@ public class GoodsService : IGoodsService
     {
         return await _goodsRepository.AddScopeAsync(scope);
     }
+
+    public async Task<Guid> UpdateGoodScopeAsync(GoodScope scope)
+    {
+        return await _goodsRepository.UpdateScopeAsync(scope);
+    }
+
+    public async Task<bool> IsGoodScopeExistsAsync(Guid goodId, int litre)
+    {
+        var existingScope = await _goodsRepository.GetScopeAsync(goodId, litre);
+
+        return existingScope != null;
+    }
 }

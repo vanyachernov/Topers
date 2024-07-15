@@ -91,6 +91,14 @@ public class GoodsRepository : IGoodsRepository
         return good.Id;
     }
 
+    public async Task<GoodScope> GetScopeAsync(Guid goodId, int litre)
+    {
+        var pExistsGoodScope = await _context.GoodScopes
+                .FirstOrDefaultAsync(gs => gs.GoodId == goodId && gs.Litre == litre);
+                
+        return _mapper.Map<GoodScope>(pExistsGoodScope);
+    }
+
     public async Task<Guid> AddScopeAsync(GoodScope goodScope)
     {
         var scopeEntity = new GoodScopeEntity
@@ -106,5 +114,17 @@ public class GoodsRepository : IGoodsRepository
         await _context.SaveChangesAsync();
 
         return scopeEntity.Id;
+    }
+
+    public async Task<Guid> UpdateScopeAsync(GoodScope goodScope)
+    {
+        await _context.GoodScopes
+            .Where(gs => gs.GoodId == goodScope.GoodId)
+            .ExecuteUpdateAsync(s => s
+                .SetProperty(gs => gs.Image, goodScope.ImageName)
+                .SetProperty(gs => gs.Litre, goodScope.Litre)
+                .SetProperty(gs => gs.Price, goodScope.Price));
+        
+        return goodScope.Id;
     }
 }

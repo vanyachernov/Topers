@@ -11,4 +11,6 @@ public interface IGoodsService
     Task<Guid> UpdateGoodAsync(Good good);
     Task<Guid> DeleteGoodAsync(Guid goodId);
     Task<Guid> AddGoodScopeAsync(GoodScope scope);
+    Task<Guid> UpdateGoodScopeAsync(GoodScope scope);
+    Task<bool> IsGoodScopeExistsAsync(Guid goodId, int litre);
 };

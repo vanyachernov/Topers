@@ -127,6 +127,7 @@ public class GoodsController(
             scope = scope with { ImageName = fileResult.Item2 };
         }
 
+
         var scopeModel = new GoodScope(
             Guid.Empty,
             goodId,
@@ -135,7 +136,9 @@ public class GoodsController(
             scope.ImageName
         );
 
-        var newScopeIdentifier = await _goodService.AddGoodScopeAsync(scopeModel);
+        var isUpdated = await _goodService.IsGoodScopeExistsAsync(goodId, scopeModel.Litre);
+
+        var newScopeIdentifier = (!isUpdated) ? await _goodService.AddGoodScopeAsync(scopeModel) : await _goodService.UpdateGoodScopeAsync(scopeModel);
 
         return Ok(newScopeIdentifier);
     }
