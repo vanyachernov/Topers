@@ -1,14 +1,11 @@
 namespace Topers.Api.Contollers;
 
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Swashbuckle.AspNetCore.Annotations;
 using Topers.Core.Abstractions;
 using Topers.Core.Dtos;
 using Topers.Core.Models;
 using Topers.Core.Validators;
-using Topers.DataAccess.Postgres.Entities;
-using Topers.Infrastructure.Features;
 
 [ApiController]
 [Route("api/goods")]
@@ -126,7 +123,6 @@ public class GoodsController(
         {
             scope = scope with { ImageName = fileResult.Item2 };
         }
-
 
         var scopeModel = new GoodScope(
             Guid.Empty,

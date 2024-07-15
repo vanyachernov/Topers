@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Text;
 using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.Extensions.FileProviders;
+using System.Globalization;
+using Microsoft.AspNetCore.Localization;
 
 var builder = WebApplication.CreateBuilder(args);
 {
@@ -76,6 +78,14 @@ var builder = WebApplication.CreateBuilder(args);
     builder.Services.AddScoped<IFileService, FileService>();
 };
 
+var defaultCulture = new CultureInfo("en-US");
+var localizationOptions = new RequestLocalizationOptions
+{
+    DefaultRequestCulture = new RequestCulture(defaultCulture),
+    SupportedCultures = [defaultCulture],
+    SupportedUICultures = [defaultCulture]
+};
+
 var app = builder.Build();
 {
     if (app.Environment.IsDevelopment())
@@ -90,6 +100,7 @@ var app = builder.Build();
     }
 
     app.UseHttpsRedirection();
+    app.UseRequestLocalization(localizationOptions);
     app.UseStaticFiles(new StaticFileOptions
     {
         FileProvider = new PhysicalFileProvider(

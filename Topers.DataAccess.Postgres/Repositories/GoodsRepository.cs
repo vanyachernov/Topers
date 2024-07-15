@@ -118,13 +118,17 @@ public class GoodsRepository : IGoodsRepository
 
     public async Task<Guid> UpdateScopeAsync(GoodScope goodScope)
     {
+        var existingGoodScope = await _context.GoodScopes
+            .AsNoTracking()
+            .FirstOrDefaultAsync(gs => gs.GoodId == goodScope.GoodId && gs.Litre == goodScope.Litre);
+
         await _context.GoodScopes
-            .Where(gs => gs.GoodId == goodScope.GoodId)
+            .Where(gs => gs.GoodId == goodScope.GoodId && gs.Litre == goodScope.Litre)
             .ExecuteUpdateAsync(s => s
                 .SetProperty(gs => gs.Image, goodScope.ImageName)
                 .SetProperty(gs => gs.Litre, goodScope.Litre)
                 .SetProperty(gs => gs.Price, goodScope.Price));
         
-        return goodScope.Id;
+        return existingGoodScope!.Id;
     }
 }
