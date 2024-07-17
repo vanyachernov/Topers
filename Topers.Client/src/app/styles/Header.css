@@ -1,0 +1,11 @@
+.navlinks, .shop-cart-button {
+    cursor: pointer;
+}
+
+.navbar-links {
+    gap: 30px;
+}
+
+.active {
+    color: #dc3d3d;
+}

@@ -1,0 +1,13 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.root {
+    background-color: #E1F9D9;
+}
+
+.wrapper {
+    max-width: 1280px;
+    margin: auto;
+}
