@@ -1,16 +1,28 @@
 import Header from '../widgets/Header'
-import { ChakraProvider } from '@chakra-ui/react'
+import { ChakraProvider, Box, Flex, Heading, Text, Button, Image } from '@chakra-ui/react'
+import HeroSection from '../widgets/HeroSection'
 
-function App() {
+
+function MainPage() {
   return (
     <ChakraProvider>
-      <div className="root">
-        <div className='wrapper'>
+      <Box bgColor='#E1F9D9'>
+        <Box 
+          maxWidth='1280px'
+          margin='auto'>
           <Header></Header>
-        </div>
-      </div>
+          <HeroSection />
+        </Box>
+      </Box>
+      <Box bgColor='#EAFBFF'>
+        <Box 
+          maxWidth='1280px'
+          margin='auto'>
+          
+        </Box>
+      </Box>
     </ChakraProvider>
   )
 }
 
-export default App
+export default MainPage
