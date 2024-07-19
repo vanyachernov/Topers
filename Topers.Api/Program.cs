@@ -114,6 +114,9 @@ var app = builder.Build();
         HttpOnly = HttpOnlyPolicy.Always,
         Secure = CookieSecurePolicy.Always
     });
+    app.UseCors(options => options.WithOrigins("http://localhost:5173/")
+        .AllowAnyHeader()
+        .AllowAnyMethod());
     app.UseAuthentication();
     app.UseAuthorization();
     app.MapControllers();
