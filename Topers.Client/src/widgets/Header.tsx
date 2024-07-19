@@ -1,16 +1,15 @@
 import React, { useState } from 'react';
-import { Image, Box, Divider, Button, Flex, Link, IconButton, Collapse, VStack } from '@chakra-ui/react';
+import { Image, Box, Divider, Button, Flex, Link, IconButton, Collapse, VStack, useDisclosure } from '@chakra-ui/react';
 import Logo from '../app/images/logo.svg';
 import Cart from '../shared/Cart';
 import { HamburgerIcon } from '@chakra-ui/icons';
+import AuthDrawer from './AuthDrawer';
 
 export default function Header() {
     const [cartOpen, setCartOpen] = useState(false);
     const [cartItemCount, setCartItemCount] = useState(1);
     const [cartTotalPrice, setCartTotalPrice] = useState(100);
-    const [isOpen, setIsOpen] = useState(false);
-
-    const toggleMenu = () => setIsOpen(!isOpen);
+    const { isOpen, onOpen, onClose } = useDisclosure();
 
     return (
         <header>
@@ -36,9 +35,11 @@ export default function Header() {
                             colorScheme='transparent' 
                             color='black' 
                             size='sm'
-                            border='1px solid gray'>
+                            border='1px solid gray'
+                            onClick={onOpen}>
                             Sign In
                         </Button>
+                        <AuthDrawer isOpen={isOpen} onClose={onClose} />
                     </Flex>
                     <Flex alignItems="center" display={{ base: 'none', md: 'flex' }}>
                         <Cart 
@@ -53,7 +54,6 @@ export default function Header() {
                         aria-label="Menu"
                         bgColor='transparent'
                         icon={<HamburgerIcon />}
-                        onClick={toggleMenu}
                         display={{ base: 'block', md: 'none' }}
                     />
                 </Flex>

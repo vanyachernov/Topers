@@ -1,7 +1,7 @@
 import Header from '../widgets/Header'
 import { ChakraProvider, Box, Flex, Heading, Text, Button, Image } from '@chakra-ui/react'
-import HeroSection from '../widgets/HeroSection'
-import GoodsSection from '../widgets/GoodsSection'
+import HeroSection from '../shared/HeroSection'
+import GoodsSection from '../shared/GoodsSection'
 
 
 function MainPage() {
