@@ -1,6 +1,7 @@
 import Header from '../widgets/Header'
 import { ChakraProvider, Box, Flex, Heading, Text, Button, Image } from '@chakra-ui/react'
 import HeroSection from '../widgets/HeroSection'
+import GoodsSection from '../widgets/GoodsSection'
 
 
 function MainPage() {
@@ -18,7 +19,7 @@ function MainPage() {
         <Box 
           maxWidth='1280px'
           margin='auto'>
-          
+            <GoodsSection />
         </Box>
       </Box>
     </ChakraProvider>

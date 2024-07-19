@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Flex, Text, Heading, Button, Image } from "@chakra-ui/react";
-import { FaLongArrowAltRight } from "react-icons/fa";
+import { ArrowForwardIcon } from "@chakra-ui/icons";
 import handsImage from "../app/images/stock_bg_hands.jpg";
 
 export default function HeroSection() {
@@ -24,18 +24,18 @@ export default function HeroSection() {
         <Button
           colorScheme="teal"
           size="lg"
-          rightIcon={<FaLongArrowAltRight />}
+          rightIcon={<ArrowForwardIcon />}
         >
           Goods
         </Button>
       </Box>
-      <Box flex="1" minWidth="200px" minHeight="200px" posi>
+      <Box flex="1" minWidth="200px" minHeight="200px" position="relative" height="100%">
         <Image
           src={handsImage}
           alt="Hands"
-          boxSize="100%"
-          minWidth="200px"
-          minHeight="200px"
+          objectFit="cover"
+          width="100%"
+          height="100%"
           sx={{
             mixBlendMode: "multiply",
             backgroundColor: "transparent",
