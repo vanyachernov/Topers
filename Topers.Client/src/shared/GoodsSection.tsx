@@ -1,52 +1,51 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import GoodCard from '../widgets/GoodCard';
-import { Box, Flex, Heading } from '@chakra-ui/react';
+import { GoodCard } from '../widgets/GoodCard';
+import { Box, Flex, Grid, Heading } from '@chakra-ui/react';
 import { Good } from '../entities/Good';
+import { GetAllGoods } from '../features/Goods';
 
 export default function GoodsSection() {
     const [goods, setGoods] = useState<Good[]>([]);
     const baseUrl = 'http://localhost:5264';
 
     useEffect(() => {
-        axios.get<Good[]>(`${baseUrl}/api/goods`)
-        .then(response => {
-            setGoods(response.data);
-            console.log(response.data);
-        })
-        .catch(error => {
-            console.error("There are some problems: ", error);
-        });
+        const fetchGoods = async() => {
+            const goodsData = await GetAllGoods();
+            setGoods(goodsData);
+        }
+        fetchGoods();
     }, []);
 
     return (
-        <Box bg='teal' borderRadius='20px' padding='20px'>
+        <Box bg='#F7F7F7' borderRadius='20px' padding='20px'>
             <Heading
                 pt='20px'
                 pb='20px'
             >Our goods</Heading>
-            <Flex 
-                wrap='wrap'
-                justify='center'
-                gap='10%'>
-                {goods.map(good => (
+            <Box>
+            {goods.map(good => (
                     <React.Fragment key={good.id}>
-                        <Heading>{good.name}</Heading>
-                        {good.scopes.map(scope => (
-                            <Box key={scope.id} flex="1 0 300px" maxW="300px">
-                                <GoodCard 
-                                    goodId={scope.id}
-                                    goodTitle={good.name}
-                                    goodDescription={good.description}
-                                    goodLitre={scope.litre}
-                                    goodImage={`${baseUrl}/resources/${scope.imageName}`}
-                                    goodPrice={scope.price}
-                                />
-                            </Box>
-                        ))}
+                        <Box>
+                            <Grid 
+                                templateColumns='repeat(2, 1fr)' 
+                                gap='10'>
+                                {good.scopes.map(scope => (
+                                        <Box key={scope.id} flex="1 0 300px" maxW="300px">
+                                            <GoodCard 
+                                                goodId={scope.id}
+                                                goodTitle={good.name}
+                                                goodDescription={good.description}
+                                                goodLitre={scope.litre}
+                                                goodImage={`${baseUrl}/resources/${scope.imageName}`}
+                                                goodPrice={scope.price}
+                                            />
+                                        </Box>
+                                    ))}
+                            </Grid>
+                        </Box>
                     </React.Fragment>
                 ))}
-            </Flex>
+            </Box>
         </Box>
     );
 }

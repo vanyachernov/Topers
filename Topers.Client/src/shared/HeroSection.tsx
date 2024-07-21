@@ -29,7 +29,14 @@ export default function HeroSection() {
           Goods
         </Button>
       </Box>
-      <Box flex="1" minWidth="200px" minHeight="200px" position="relative" height="100%">
+      <Box
+        flex="1"
+        minWidth="200px"
+        minHeight="200px"
+        position="relative"
+        height="100%"
+        width={["100%", "50%"]}
+      >
         <Image
           src={handsImage}
           alt="Hands"

@@ -21,14 +21,14 @@ interface GoodCardProps {
   goodPrice: number;
 }
 
-const GoodCard: React.FC<GoodCardProps> = ({
+export const GoodCard = ({
   goodId,
   goodTitle,
   goodDescription,
   goodLitre,
   goodImage,
   goodPrice
-}) => {
+}: GoodCardProps) => {
   return (
     <Card maxW="sm" key={goodId}>
       <CardBody>
@@ -41,11 +41,11 @@ const GoodCard: React.FC<GoodCardProps> = ({
           mx="auto"
         />
         <Stack mt="6" spacing="3">
-          <Heading size="md">{goodLitre} litre</Heading>
+          <Heading size="md">{goodTitle} ({goodLitre} litre)</Heading>
           <Text>
             {goodDescription}
           </Text>
-          <Text color="teal" fontSize="sm" fontWeight="bold">
+          <Text color="teal" fontSize="l" fontWeight="bold">
             {goodPrice} $
           </Text>
         </Stack>
@@ -64,5 +64,3 @@ const GoodCard: React.FC<GoodCardProps> = ({
     </Card>
   );
 };
-
-export default GoodCard;

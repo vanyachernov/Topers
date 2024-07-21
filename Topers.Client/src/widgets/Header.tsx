@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Image, Box, Divider, Button, Flex, Link, IconButton, Collapse, VStack, useDisclosure } from '@chakra-ui/react';
-import Logo from '../app/images/logo.svg';
+import Logo from '../app/images/logo.svg'
 import Cart from '../shared/Cart';
 import { HamburgerIcon } from '@chakra-ui/icons';
 import AuthDrawer from './AuthDrawer';

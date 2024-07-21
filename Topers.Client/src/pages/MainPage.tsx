@@ -1,5 +1,5 @@
 import Header from '../widgets/Header'
-import { ChakraProvider, Box, Flex, Heading, Text, Button, Image } from '@chakra-ui/react'
+import { ChakraProvider, Box } from '@chakra-ui/react'
 import HeroSection from '../shared/HeroSection'
 import GoodsSection from '../shared/GoodsSection'
 
@@ -11,14 +11,15 @@ function MainPage() {
         <Box 
           maxWidth='1280px'
           margin='auto'>
-          <Header></Header>
+          <Header />
           <HeroSection />
         </Box>
       </Box>
       <Box bgColor='#EAFBFF'>
         <Box 
           maxWidth='1280px'
-          margin='auto'>
+          margin='auto'
+          pt='20px'>
             <GoodsSection />
         </Box>
       </Box>
