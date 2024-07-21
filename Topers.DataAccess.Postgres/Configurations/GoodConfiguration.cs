@@ -17,9 +17,5 @@ public class GoodConfiguration : IEntityTypeConfiguration<GoodEntity>
             .HasMany(g => g.Scopes)
             .WithOne(s => s.Good)
             .HasForeignKey(s => s.GoodId);
-        builder
-            .HasMany(g => g.OrderDetails)
-            .WithOne(d => d.Good)
-            .HasForeignKey(d => d.GoodId);
     }
 }
