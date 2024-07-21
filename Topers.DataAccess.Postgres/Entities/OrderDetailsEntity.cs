@@ -1,3 +1,5 @@
+using Topers.Core.Models;
+
 namespace Topers.DataAccess.Postgres.Entities;
 
 /// <summary>
@@ -28,7 +30,7 @@ public class OrderDetailsEntity
     /// <summary>
     /// Gets or sets a good.
     /// </summary>
-    public GoodEntity Good { get; set; } = null!;
+    public GoodScopeEntity Good { get; set; } = null!;
 
     /// <summary>
     /// Gets or sets a good quantity.

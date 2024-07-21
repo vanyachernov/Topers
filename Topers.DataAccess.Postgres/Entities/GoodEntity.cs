@@ -34,9 +34,4 @@ public class GoodEntity
     /// Gets or sets a good scopes collection.
     /// </summary>
     public ICollection<GoodScopeEntity> Scopes { get; set; } = [];
-    
-    /// <summary>
-    /// Gets or sets an order details about good.
-    /// </summary>
-    public ICollection<OrderDetailsEntity>? OrderDetails { get; set; } = [];
 }

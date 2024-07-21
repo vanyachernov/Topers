@@ -43,4 +43,9 @@ public class GoodScopeEntity
     /// Gets or sets a good image file.
     /// </summary>
     public IFormFile? ImageFile { get; set; }
+
+    /// <summary>
+    /// Gets or sets an order details about good.
+    /// </summary>
+    public ICollection<OrderDetailsEntity>? OrderDetails { get; set; } = [];
 }
