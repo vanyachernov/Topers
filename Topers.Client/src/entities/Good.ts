@@ -1,5 +1,8 @@
+import { Scope } from "./Scope";
+
 export interface Good {
     id: string;
     name: string;
-    price: number;
+    description: string;
+    scopes: Scope[]
 }
