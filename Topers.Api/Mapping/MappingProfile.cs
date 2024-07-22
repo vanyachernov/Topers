@@ -31,22 +31,22 @@ public class MappingProfile : Profile
     .ForMember(dest => dest.Quantity, opt => opt.MapFrom(src => src.Quantity))
     .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.Price));
 
-CreateMap<OrderEntity, Order>()
-    .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
-    .ForMember(dest => dest.Date, opt => opt.MapFrom(src => src.Date))
-    .ForMember(dest => dest.CustomerId, opt => opt.MapFrom(src => src.CustomerId))
-    .ForMember(dest => dest.TotalPrice, opt => opt.MapFrom(src => src.TotalPrice))
-    .ForMember(dest => dest.OrderDetails, opt => opt.MapFrom(src => src.OrderDetails)); // Ensure this line is correctly configured
+        CreateMap<OrderEntity, Order>()
+            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+            .ForMember(dest => dest.Date, opt => opt.MapFrom(src => src.Date))
+            .ForMember(dest => dest.CustomerId, opt => opt.MapFrom(src => src.CustomerId))
+            .ForMember(dest => dest.TotalPrice, opt => opt.MapFrom(src => src.TotalPrice))
+            .ForMember(dest => dest.OrderDetails, opt => opt.MapFrom(src => src.OrderDetails));
 
-CreateMap<Order, OrderResponseDto>()
-    .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
-    .ForMember(dest => dest.Date, opt => opt.MapFrom(src => src.Date))
-    .ForMember(dest => dest.CustomerId, opt => opt.MapFrom(src => src.CustomerId))
-    .ForMember(dest => dest.TotalPrice, opt => opt.MapFrom(src => src.TotalPrice))
-    .ForMember(dest => dest.OrderDetails, opt => opt.MapFrom(src => src.OrderDetails));
+        CreateMap<Order, OrderResponseDto>()
+            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+            .ForMember(dest => dest.Date, opt => opt.MapFrom(src => src.Date))
+            .ForMember(dest => dest.CustomerId, opt => opt.MapFrom(src => src.CustomerId))
+            .ForMember(dest => dest.TotalPrice, opt => opt.MapFrom(src => src.TotalPrice))
+            .ForMember(dest => dest.OrderDetails, opt => opt.MapFrom(src => src.OrderDetails));
 
-CreateMap<OrderDetails, OrderDetailsResponseDto>()
-    .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id));
+        CreateMap<OrderDetails, OrderDetailsResponseDto>()
+            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id));
 
 
         CreateMap<CustomerRequestDto, Customer>();
