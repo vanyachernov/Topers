@@ -16,3 +16,9 @@ public record OrderRequestDto(
 public record UpdateOrderRequestDto(
     Guid CustomerId
 );
+
+public record AddProductToOrderRequestDto(
+    Guid GoodScopeId,
+    int GoodQuantity,
+    int GoodLitre
+);

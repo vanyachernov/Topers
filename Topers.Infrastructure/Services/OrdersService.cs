@@ -8,13 +8,16 @@ namespace Topers.Infrastructure.Services;
 public class OrdersService : IOrdersService
 {
     private readonly IOrdersRepository _ordersRepository;
+    private readonly IGoodsRepository _goodsRepository;
     private readonly IMapper _mapper;
 
     public OrdersService(
         IOrdersRepository ordersRepository,
+        IGoodsRepository goodsRepository,
         IMapper mapper)
     {
         _ordersRepository = ordersRepository;
+        _goodsRepository = goodsRepository;
         _mapper = mapper;
     }
 
@@ -51,5 +54,20 @@ public class OrdersService : IOrdersService
     public async Task<Guid> UpdateOrderAsync(Order order)
     {
         return await _ordersRepository.UpdateAsync(order);
+    }
+
+    public async Task<Guid> AddGoodToOrderAsync(OrderDetails detail, GoodScope good)
+    {
+        var goodScope = await _goodsRepository.GetScopeAsync(detail.GoodId, good.Litre);
+
+        var newGoodDetailEntity = new OrderDetails
+        (
+            detail.OrderId,
+            detail.GoodId,
+            detail.Quantity,
+            goodScope.Price
+        );
+
+        return await _ordersRepository.AddDetailAsync(newGoodDetailEntity);
     }
 }

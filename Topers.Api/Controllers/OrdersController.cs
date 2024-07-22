@@ -79,5 +79,29 @@ namespace Topers.Api.Controllers
 
             return Ok(updatedOrder);
         }
+
+        [HttpPost("{orderId:guid}/addGood")]
+        [SwaggerResponse(200, Description = "Add good to an existing order.")]
+        [SwaggerResponse(400, Description = "There are some errors in the model.")]
+        public async Task<ActionResult<OrderResponseDto>> AddProductToOrder([FromRoute] Guid orderId, [FromBody] AddProductToOrderRequestDto orderDetail)
+        {
+            var newGoodDetail = new OrderDetails
+            (
+                orderId,
+                orderDetail.GoodScopeId,
+                orderDetail.GoodQuantity
+            );
+
+            var newGoodScope = new GoodScope
+            (
+                Guid.Empty,
+                orderDetail.GoodScopeId,
+                orderDetail.GoodLitre
+            );
+
+            var newGoodDetailIdentifier = await _ordersService.AddGoodToOrderAsync(newGoodDetail, newGoodScope);
+
+            return Ok(newGoodDetailIdentifier);
+        }
     }
 }

@@ -5,13 +5,12 @@ namespace Topers.Core.Models;
 /// </summary>
 public class OrderDetails
 {
-    public OrderDetails(Guid id, Guid orderId, Guid goodId, int quantity, decimal price)
+    public OrderDetails(Guid orderId, Guid goodId, int quantity, decimal totalPrice = 0)
     {
-        Id = id;
         OrderId = orderId;
         GoodId = goodId;
         Quantity = quantity;
-        Price = price;
+        Price = totalPrice;
     }
 
     /// <summary>

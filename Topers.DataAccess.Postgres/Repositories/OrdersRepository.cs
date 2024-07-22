@@ -73,4 +73,21 @@ public class OrdersRepository : IOrdersRepository
         
         return order.Id;
     }
+
+    public async Task<Guid> AddDetailAsync(OrderDetails detail)
+    {
+        var orderDetailEntity = new OrderDetailsEntity
+        {
+            Id = Guid.NewGuid(),
+            OrderId = detail.OrderId,
+            GoodId = detail.GoodId,
+            Quantity = detail.Quantity,
+            Price = detail.Price
+        };
+
+        await _context.OrderDetails.AddAsync(orderDetailEntity);
+        await _context.SaveChangesAsync();
+
+        return orderDetailEntity.Id;
+    }
 }

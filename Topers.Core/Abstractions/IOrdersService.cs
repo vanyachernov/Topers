@@ -10,4 +10,5 @@ public interface IOrdersService
     Task<OrderResponseDto> CreateOrderAsync(Order order);
     Task<Guid> UpdateOrderAsync(Order order);
     Task<Guid> DeleteOrderAsync(Guid orderId);
+    Task<Guid> AddGoodToOrderAsync(OrderDetails detail, GoodScope good);
 };

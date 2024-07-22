@@ -9,4 +9,5 @@ public interface IOrdersRepository
     Task<Guid> CreateAsync(Order order);
     Task<Guid> UpdateAsync(Order order);
     Task<Guid> DeleteAsync(Guid orderId);
+    Task<Guid> AddDetailAsync(OrderDetails detail);
 };
