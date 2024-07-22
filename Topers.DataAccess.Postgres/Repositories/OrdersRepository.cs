@@ -1,4 +1,3 @@
-using System.Runtime.CompilerServices;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Topers.Core.Abstractions;
@@ -24,7 +23,7 @@ public class OrdersRepository : IOrdersRepository
         {
             Id = Guid.NewGuid(),
             Date = DateTime.UtcNow,
-            CustomerId = order.Customer.Id,
+            CustomerId = order.CustomerId,
             TotalPrice = order.TotalPrice
         };
 
@@ -70,7 +69,7 @@ public class OrdersRepository : IOrdersRepository
         await _context.Orders
             .Where(o => o.Id == order.Id)
             .ExecuteUpdateAsync(oUpdate => oUpdate
-                .SetProperty(o => o.CustomerId, order.Customer.Id));
+                .SetProperty(o => o.CustomerId, order.CustomerId));
         
         return order.Id;
     }

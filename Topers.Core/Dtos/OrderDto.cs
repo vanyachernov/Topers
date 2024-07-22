@@ -12,3 +12,7 @@ public record OrderRequestDto(
     Guid CustomerId,
     decimal TotalPrice
 );
+
+public record UpdateOrderRequestDto(
+    Guid CustomerId
+);

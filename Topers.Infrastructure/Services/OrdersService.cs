@@ -26,7 +26,7 @@ public class OrdersService : IOrdersService
         (
             newOrderIdentifier,
             order.Date,
-            order.Customer.Id,
+            order.CustomerId,
             order.TotalPrice
         );
 
