@@ -44,18 +44,20 @@ public class OrdersRepository : IOrdersRepository
 
     public async Task<List<Order>> GetAllAsync()
     {
-        var orderEntity = await _context.Orders
-            .AsNoTracking()
-            .ToListAsync();
-        
-        var orderEntitiesDto = _mapper.Map<List<Order>>(orderEntity);
+        var orderEntities = await _context.Orders
+        .Include(o => o.OrderDetails)
+        .AsNoTracking()
+        .ToListAsync();
+    
+        var orders = _mapper.Map<List<Order>>(orderEntities);
 
-        return orderEntitiesDto;
+        return orders;
     }
 
     public async Task<Order> GetByIdAsync(Guid orderId)
     {
         var orderEntity = await _context.Orders
+            .Include(o => o.OrderDetails)
             .AsNoTracking()
             .FirstOrDefaultAsync(o => o.Id == orderId);
 

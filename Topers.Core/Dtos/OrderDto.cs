@@ -4,7 +4,8 @@ public record OrderResponseDto(
     Guid Id,
     DateTime Date,
     Guid CustomerId,
-    decimal TotalPrice
+    decimal TotalPrice,
+    List<OrderDetailsResponseDto>? OrderDetails = null
 );
 
 public record OrderRequestDto(

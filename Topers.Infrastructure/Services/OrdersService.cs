@@ -63,7 +63,7 @@ public class OrdersService : IOrdersService
         var newGoodDetailEntity = new OrderDetails
         (
             detail.OrderId,
-            detail.GoodId,
+            goodScope.Id,
             detail.Quantity,
             goodScope.Price
         );

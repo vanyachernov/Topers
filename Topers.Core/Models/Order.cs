@@ -11,6 +11,7 @@ public class Order
         Date = date;
         CustomerId = customerId;
         TotalPrice = totalPrice;
+        OrderDetails = [];
     }
 
     /// <summary>
@@ -32,4 +33,9 @@ public class Order
     /// Gets or sets an order total price.
     /// </summary>
     public decimal TotalPrice { get; } = 0;
+
+    /// <summary>
+    ///  Gets or sets a good scopes.
+    /// </summary>
+    public ICollection<OrderDetails> OrderDetails { get; set; }
 }

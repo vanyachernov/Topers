@@ -25,6 +25,30 @@ public class MappingProfile : Profile
                 src.Address.Country
             ) : null));
 
+        CreateMap<OrderDetailsEntity, OrderDetails>()
+    .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+    .ForMember(dest => dest.GoodId, opt => opt.MapFrom(src => src.GoodId))
+    .ForMember(dest => dest.Quantity, opt => opt.MapFrom(src => src.Quantity))
+    .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.Price));
+
+CreateMap<OrderEntity, Order>()
+    .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+    .ForMember(dest => dest.Date, opt => opt.MapFrom(src => src.Date))
+    .ForMember(dest => dest.CustomerId, opt => opt.MapFrom(src => src.CustomerId))
+    .ForMember(dest => dest.TotalPrice, opt => opt.MapFrom(src => src.TotalPrice))
+    .ForMember(dest => dest.OrderDetails, opt => opt.MapFrom(src => src.OrderDetails)); // Ensure this line is correctly configured
+
+CreateMap<Order, OrderResponseDto>()
+    .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+    .ForMember(dest => dest.Date, opt => opt.MapFrom(src => src.Date))
+    .ForMember(dest => dest.CustomerId, opt => opt.MapFrom(src => src.CustomerId))
+    .ForMember(dest => dest.TotalPrice, opt => opt.MapFrom(src => src.TotalPrice))
+    .ForMember(dest => dest.OrderDetails, opt => opt.MapFrom(src => src.OrderDetails));
+
+CreateMap<OrderDetails, OrderDetailsResponseDto>()
+    .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id));
+
+
         CreateMap<CustomerRequestDto, Customer>();
 
         CreateMap<CategoryEntity, Category>();
@@ -55,7 +79,7 @@ public class MappingProfile : Profile
                         scope.ImageName
                     )).ToList()
                     : new List<GoodScopeResponseDto>()));
-        
+
         CreateMap<UserEntity, User>();
         CreateMap<User, UserEntity>();
 
@@ -66,5 +90,8 @@ public class MappingProfile : Profile
             .ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.Address));
 
         CreateMap<AddressEntity, Address>();
+
+        CreateMap<OrderEntity, Order>();
+        CreateMap<Order, OrderEntity>();
     }
 }
