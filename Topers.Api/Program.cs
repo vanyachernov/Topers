@@ -66,12 +66,14 @@ var builder = WebApplication.CreateBuilder(args);
     builder.Services.AddScoped<ICustomersRepository, CustomersRepository>();
     builder.Services.AddScoped<IGoodsRepository, GoodsRepository>();
     builder.Services.AddScoped<IUsersRepository, UsersRepository>();
+    builder.Services.AddScoped<IOrdersRepository, OrdersRepository>();
 
     builder.Services.AddScoped<ICategoriesService, CategoriesService>();
     builder.Services.AddScoped<IAddressesService, AddressesService>();
     builder.Services.AddScoped<ICustomersService, CustomersService>();
     builder.Services.AddScoped<IGoodsService, GoodsService>();
     builder.Services.AddScoped<IUsersService, UsersService>();
+    builder.Services.AddScoped<IOrdersService, OrdersService>();
 
     builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
     builder.Services.AddScoped<IJwtProvider, JwtProvider>();

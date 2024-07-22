@@ -33,5 +33,5 @@ public class OrderEntity
     /// <summary>
     /// Gets or sets an order details.
     /// </summary>
-    public ICollection<OrderDetailsEntity>? OrderDetails { get; set; } = [];
+    public ICollection<OrderDetailsEntity> OrderDetails { get; set; } = [];
 }

@@ -5,7 +5,7 @@ namespace Topers.Core.Models;
 /// </summary>
 public class GoodScope
 {
-    public GoodScope(Guid id, Guid goodId, int litre, decimal price, string? image)
+    public GoodScope(Guid id, Guid goodId, int litre, decimal price = 0, string? image = null)
     {
         Id = id;
         GoodId = goodId;

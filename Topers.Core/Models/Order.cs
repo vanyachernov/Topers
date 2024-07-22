@@ -5,12 +5,13 @@ namespace Topers.Core.Models;
 /// </summary>
 public class Order
 {
-    public Order(Guid id, DateTime date, Customer customer, decimal totalPrice)
+    public Order(Guid id, DateTime date, Guid customerId, decimal totalPrice)
     {
         Id = id;
         Date = date;
-        Customer = customer;
+        CustomerId = customerId;
         TotalPrice = totalPrice;
+        OrderDetails = [];
     }
 
     /// <summary>
@@ -24,12 +25,17 @@ public class Order
     public DateTime Date { get; }
 
     /// <summary>
-    /// Gets or sets an order customer.
+    /// Gets or sets an order customer identifier.
     /// </summary>
-    public Customer Customer { get; } = null!;
+    public Guid CustomerId { get; }
 
     /// <summary>
     /// Gets or sets an order total price.
     /// </summary>
     public decimal TotalPrice { get; } = 0;
+
+    /// <summary>
+    ///  Gets or sets a good scopes.
+    /// </summary>
+    public ICollection<OrderDetails> OrderDetails { get; set; }
 }
