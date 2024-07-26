@@ -4,6 +4,6 @@ using Topers.Core.Models;
 
 public interface IUsersRepository
 {
-    Task Add(User user);
-    Task<User> GetByName(string username);
+    Task Add(User user, CancellationToken cancellationToken = default);
+    Task<User> GetByName(string username, CancellationToken cancellationToken = default);
 };

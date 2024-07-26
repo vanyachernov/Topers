@@ -5,5 +5,5 @@ using Topers.Core.Models;
 
 public interface IAddressesService
 {
-    Task<AddressResponseDto> AddAddressToCustomerAsync(Address address);
+    Task<AddressResponseDto> AddAddressToCustomerAsync(Address address, CancellationToken cancellationToken = default);
 };

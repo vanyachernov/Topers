@@ -14,7 +14,7 @@ public class AddressesRepository : IAddressesRepository
         _context = context;
     }
 
-    public async Task<Guid> CreateAsync(Address address)
+    public async Task<Guid> CreateAsync(Address address, CancellationToken cancellationToken = default)
     {
         var addressEntity = new AddressEntity
         {

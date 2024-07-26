@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.Extensions.FileProviders;
 using System.Globalization;
 using Microsoft.AspNetCore.Localization;
+using Topers.Api.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 {
@@ -122,5 +123,9 @@ var app = builder.Build();
     app.UseAuthentication();
     app.UseAuthorization();
     app.MapControllers();
+    app.MapGet("get", () => {
+        Results.Ok("ok");
+    });
+    app.UseMiddleware<TaskCancellationHandlingMiddleware>();
     app.Run();
 }

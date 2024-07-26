@@ -20,7 +20,7 @@ public class UsersService : IUsersService
         _jwtProvider = jwtProvider;
     }
 
-    public async Task Register(string username, string email, string password)
+    public async Task Register(string username, string email, string password, CancellationToken cancellationToken = default)
     {
         var hashedPassword = _passwordHasher.Generate(password);
 
@@ -29,7 +29,7 @@ public class UsersService : IUsersService
         await _usersRepository.Add(newUser);
     }
 
-    public async Task<string> Login(string username, string password)
+    public async Task<string> Login(string username, string password, CancellationToken cancellationToken = default)
     {
         var user = await _usersRepository.GetByName(username);
 

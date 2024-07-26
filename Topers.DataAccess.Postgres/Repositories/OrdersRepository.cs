@@ -17,7 +17,7 @@ public class OrdersRepository : IOrdersRepository
         _mapper = mapper;
     }
 
-    public async Task<Guid> CreateAsync(Order order)
+    public async Task<Guid> CreateAsync(Order order, CancellationToken cancellationToken = default)
     {
         var orderEntity = new OrderEntity
         {
@@ -33,7 +33,7 @@ public class OrdersRepository : IOrdersRepository
         return orderEntity.Id;
     }
 
-    public async Task<Guid> DeleteAsync(Guid orderId)
+    public async Task<Guid> DeleteAsync(Guid orderId, CancellationToken cancellationToken = default)
     {
         await _context.Orders
             .Where(o => o.Id == orderId)
@@ -42,7 +42,7 @@ public class OrdersRepository : IOrdersRepository
         return orderId;
     }
 
-    public async Task<List<Order>> GetAllAsync()
+    public async Task<List<Order>> GetAllAsync(CancellationToken cancellationToken = default)
     {
         var orderEntities = await _context.Orders
         .Include(o => o.OrderDetails)
@@ -54,7 +54,7 @@ public class OrdersRepository : IOrdersRepository
         return orders;
     }
 
-    public async Task<Order> GetByIdAsync(Guid orderId)
+    public async Task<Order> GetByIdAsync(Guid orderId, CancellationToken cancellationToken = default)
     {
         var orderEntity = await _context.Orders
             .Include(o => o.OrderDetails)
@@ -66,7 +66,7 @@ public class OrdersRepository : IOrdersRepository
         return orderEntityDto;
     }
 
-    public async Task<Guid> UpdateAsync(Order order)
+    public async Task<Guid> UpdateAsync(Order order, CancellationToken cancellationToken = default)
     {
         await _context.Orders
             .Where(o => o.Id == order.Id)
@@ -76,7 +76,7 @@ public class OrdersRepository : IOrdersRepository
         return order.Id;
     }
 
-    public async Task<Guid> AddDetailAsync(OrderDetails detail)
+    public async Task<Guid> AddDetailAsync(OrderDetails detail, CancellationToken cancellationToken = default)
     {
         var orderDetailEntity = new OrderDetailsEntity
         {

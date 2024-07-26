@@ -16,7 +16,7 @@ public class GoodsService : IGoodsService
         _mapper = mapper;
     }
 
-    public async Task<GoodResponseDto> CreateGoodAsync(Good good)
+    public async Task<GoodResponseDto> CreateGoodAsync(Good good, CancellationToken cancellationToken = default)
     {
         var newGoodIdentifier = await _goodsRepository.CreateAsync(good);
 
@@ -31,37 +31,37 @@ public class GoodsService : IGoodsService
         return newGood;
     }
 
-    public async Task<Guid> DeleteGoodAsync(Guid goodId)
+    public async Task<Guid> DeleteGoodAsync(Guid goodId, CancellationToken cancellationToken = default)
     {
         return await _goodsRepository.DeleteAsync(goodId);
     }
 
-    public async Task<List<GoodResponseDto>> GetAllGoodsAsync()
+    public async Task<List<GoodResponseDto>> GetAllGoodsAsync(CancellationToken cancellationToken = default)
     {
         return _mapper.Map<List<GoodResponseDto>>(await _goodsRepository.GetAllAsync());
     }
 
-    public async Task<GoodResponseDto> GetGoodByIdAsync(Guid goodId)
+    public async Task<GoodResponseDto> GetGoodByIdAsync(Guid goodId, CancellationToken cancellationToken = default)
     {
         return _mapper.Map<GoodResponseDto>(await _goodsRepository.GetByIdAsync(goodId));
     }
 
-    public async Task<Guid> UpdateGoodAsync(Good good)
+    public async Task<Guid> UpdateGoodAsync(Good good, CancellationToken cancellationToken = default)
     {
         return await _goodsRepository.UpdateAsync(good);
     }
 
-    public async Task<Guid> AddGoodScopeAsync(GoodScope scope)
+    public async Task<Guid> AddGoodScopeAsync(GoodScope scope, CancellationToken cancellationToken = default)
     {
         return await _goodsRepository.AddScopeAsync(scope);
     }
 
-    public async Task<Guid> UpdateGoodScopeAsync(GoodScope scope)
+    public async Task<Guid> UpdateGoodScopeAsync(GoodScope scope, CancellationToken cancellationToken = default)
     {
         return await _goodsRepository.UpdateScopeAsync(scope);
     }
 
-    public async Task<bool> IsGoodScopeExistsAsync(Guid goodId, int litre)
+    public async Task<bool> IsGoodScopeExistsAsync(Guid goodId, int litre, CancellationToken cancellationToken = default)
     {
         var existingScope = await _goodsRepository.GetScopeAsync(goodId, litre);
 
