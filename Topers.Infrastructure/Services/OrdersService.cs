@@ -21,7 +21,7 @@ public class OrdersService : IOrdersService
         _mapper = mapper;
     }
 
-    public async Task<OrderResponseDto> CreateOrderAsync(Order order)
+    public async Task<OrderResponseDto> CreateOrderAsync(Order order, CancellationToken cancellationToken = default)
     {
         var newOrderIdentifier = await _ordersRepository.CreateAsync(order);
 
@@ -36,27 +36,27 @@ public class OrdersService : IOrdersService
         return newOrder;
     }
 
-    public async Task<Guid> DeleteOrderAsync(Guid orderId)
+    public async Task<Guid> DeleteOrderAsync(Guid orderId, CancellationToken cancellationToken = default)
     {
         return await _ordersRepository.DeleteAsync(orderId);
     }
 
-    public async Task<List<OrderResponseDto>> GetAllOrdersAsync()
+    public async Task<List<OrderResponseDto>> GetAllOrdersAsync(CancellationToken cancellationToken = default)
     {
         return _mapper.Map<List<OrderResponseDto>>(await _ordersRepository.GetAllAsync());
     }
 
-    public async Task<OrderResponseDto> GetOrderByIdAsync(Guid orderId)
+    public async Task<OrderResponseDto> GetOrderByIdAsync(Guid orderId, CancellationToken cancellationToken = default)
     {
         return _mapper.Map<OrderResponseDto>(await _ordersRepository.GetByIdAsync(orderId));
     }
 
-    public async Task<Guid> UpdateOrderAsync(Order order)
+    public async Task<Guid> UpdateOrderAsync(Order order, CancellationToken cancellationToken = default)
     {
         return await _ordersRepository.UpdateAsync(order);
     }
 
-    public async Task<Guid> AddGoodToOrderAsync(OrderDetails detail, GoodScope good)
+    public async Task<Guid> AddGoodToOrderAsync(OrderDetails detail, GoodScope good, CancellationToken cancellationToken = default)
     {
         var goodScope = await _goodsRepository.GetScopeAsync(detail.GoodId, good.Litre);
 

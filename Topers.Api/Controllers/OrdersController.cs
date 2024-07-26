@@ -17,9 +17,9 @@ namespace Topers.Api.Controllers
         [HttpGet]
         [SwaggerResponse(200, Description = "Returns an orders list.", Type = typeof(IEnumerable<OrderResponseDto>))]
         [SwaggerResponse(400, Description = "Orders not found.")]
-        public async Task<ActionResult<List<OrderResponseDto>>> GetOrders()
+        public async Task<ActionResult<List<OrderResponseDto>>> GetOrders(CancellationToken cancellationToken)
         {
-            var orders = await _ordersService.GetAllOrdersAsync();
+            var orders = await _ordersService.GetAllOrdersAsync(cancellationToken);
 
             if (orders == null)
             {
@@ -32,9 +32,11 @@ namespace Topers.Api.Controllers
         [HttpGet("{orderId:guid}")]
         [SwaggerResponse(200, Description = "Returns an orders list.", Type = typeof(OrderResponseDto))]
         [SwaggerResponse(400, Description = "Orders not found.")]
-        public async Task<ActionResult<OrderResponseDto>> GetOrderById([FromRoute] Guid orderId)
+        public async Task<ActionResult<OrderResponseDto>> GetOrderById(
+            [FromRoute] Guid orderId,
+            CancellationToken cancellationToken)
         {
-            var order = await _ordersService.GetOrderByIdAsync(orderId);
+            var order = await _ordersService.GetOrderByIdAsync(orderId, cancellationToken);
 
             if (order == null)
             {
@@ -47,7 +49,9 @@ namespace Topers.Api.Controllers
         [HttpPost("create")]
         [SwaggerResponse(200, Description = "Create a new order.")]
         [SwaggerResponse(400, Description = "There are some errors in the model.")]
-        public async Task<ActionResult<OrderResponseDto>> CreateGood([FromBody] OrderRequestDto order)
+        public async Task<ActionResult<OrderResponseDto>> CreateGood(
+            [FromBody] OrderRequestDto order,
+            CancellationToken cancellationToken)
         {
             var newOrder = new Order
             (
@@ -57,7 +61,7 @@ namespace Topers.Api.Controllers
                 0
             );
 
-            var newOrderEntity = await _ordersService.CreateOrderAsync(newOrder);
+            var newOrderEntity = await _ordersService.CreateOrderAsync(newOrder, cancellationToken);
 
             return Ok(newOrderEntity);
         }
@@ -65,7 +69,10 @@ namespace Topers.Api.Controllers
         [HttpPut("{orderId:guid}")]
         [SwaggerResponse(200, Description = "Update an existing order.")]
         [SwaggerResponse(400, Description = "There are some errors in the model.")]
-        public async Task<ActionResult<OrderResponseDto>> UpdateOrder([FromRoute] Guid orderId, [FromBody] UpdateOrderRequestDto order)
+        public async Task<ActionResult<OrderResponseDto>> UpdateOrder(
+            [FromRoute] Guid orderId, 
+            [FromBody] UpdateOrderRequestDto order,
+            CancellationToken cancellationToken)
         {
             var existOrder = new Order
             (
@@ -75,7 +82,7 @@ namespace Topers.Api.Controllers
                 Decimal.MinValue
             );
 
-            var updatedOrder = await _ordersService.UpdateOrderAsync(existOrder);
+            var updatedOrder = await _ordersService.UpdateOrderAsync(existOrder, cancellationToken);
 
             return Ok(updatedOrder);
         }
@@ -83,7 +90,10 @@ namespace Topers.Api.Controllers
         [HttpPost("{orderId:guid}/addGood")]
         [SwaggerResponse(200, Description = "Add good to an existing order.")]
         [SwaggerResponse(400, Description = "There are some errors in the model.")]
-        public async Task<ActionResult<OrderResponseDto>> AddProductToOrder([FromRoute] Guid orderId, [FromBody] AddProductToOrderRequestDto orderDetail)
+        public async Task<ActionResult<OrderResponseDto>> AddProductToOrder(
+            [FromRoute] Guid orderId, 
+            [FromBody] AddProductToOrderRequestDto orderDetail,
+            CancellationToken cancellationToken)
         {
             var newGoodDetail = new OrderDetails
             (
@@ -99,7 +109,7 @@ namespace Topers.Api.Controllers
                 orderDetail.GoodLitre
             );
 
-            var newGoodDetailIdentifier = await _ordersService.AddGoodToOrderAsync(newGoodDetail, newGoodScope);
+            var newGoodDetailIdentifier = await _ordersService.AddGoodToOrderAsync(newGoodDetail, newGoodScope, cancellationToken);
 
             return Ok(newGoodDetailIdentifier);
         }

@@ -16,7 +16,7 @@ public class CustomersService : ICustomersService
         _mapper = mapper;
     }
 
-    public async Task<CustomerResponseDto> CreateCustomerAsync(Customer customer)
+    public async Task<CustomerResponseDto> CreateCustomerAsync(Customer customer, CancellationToken cancellationToken = default)
     {
         var newCustomerIdentifier = await _customersRepository.CreateAsync(customer);
 
@@ -31,12 +31,12 @@ public class CustomersService : ICustomersService
         return newCustomer;
     }
 
-    public async Task<List<CustomerResponseDto>> GetAllCustomersAsync()
+    public async Task<List<CustomerResponseDto>> GetAllCustomersAsync(CancellationToken cancellationToken = default)
     {
         return _mapper.Map<List<CustomerResponseDto>>(await _customersRepository.GetAllAsync());
     }
 
-    public async Task<CustomerResponseDto> GetCustomerByIdAsync(Guid customerId)
+    public async Task<CustomerResponseDto> GetCustomerByIdAsync(Guid customerId, CancellationToken cancellationToken = default)
     {
         return _mapper.Map<CustomerResponseDto>(await _customersRepository.GetByIdAsync(customerId));
     }

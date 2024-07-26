@@ -17,7 +17,7 @@ public class GoodsRepository : IGoodsRepository
         _mapper = mapper;
     }
 
-    public async Task<Guid> CreateAsync(Good good)
+    public async Task<Guid> CreateAsync(Good good, CancellationToken cancellationToken = default)
     {
         var goodEntity = new GoodEntity
         {
@@ -33,7 +33,7 @@ public class GoodsRepository : IGoodsRepository
         return goodEntity.Id;
     }
 
-    public async Task<Guid> DeleteAsync(Guid goodId)
+    public async Task<Guid> DeleteAsync(Guid goodId, CancellationToken cancellationToken = default)
     {
         await _context.Goods
             .Where(g => g.Id == goodId)
@@ -42,7 +42,7 @@ public class GoodsRepository : IGoodsRepository
         return goodId;
     }
 
-    public async Task<List<Good>> GetAllAsync()
+    public async Task<List<Good>> GetAllAsync(CancellationToken cancellationToken = default)
     {
         var goodEntities = await _context.Goods
             .Include(g => g.Scopes)
@@ -54,7 +54,7 @@ public class GoodsRepository : IGoodsRepository
         return goodEntitiesDto;
     }
 
-    public async Task<List<Good>> GetByFilterAsync(string title)
+    public async Task<List<Good>> GetByFilterAsync(string title, CancellationToken cancellationToken = default)
     {
         var query = _context.Goods.Include(g => g.Scopes).AsNoTracking();
 
@@ -68,7 +68,7 @@ public class GoodsRepository : IGoodsRepository
         return goodEntitiesDto;
     }
 
-    public async Task<Good> GetByIdAsync(Guid goodId)
+    public async Task<Good> GetByIdAsync(Guid goodId, CancellationToken cancellationToken = default)
     {
         var goodEntity = await _context.Goods
             .AsNoTracking()
@@ -79,7 +79,7 @@ public class GoodsRepository : IGoodsRepository
         return goodEntityDto;
     }
 
-    public async Task<Guid> UpdateAsync(Good good)
+    public async Task<Guid> UpdateAsync(Good good, CancellationToken cancellationToken = default)
     {
         await _context.Goods
             .Where(g => g.Id == good.Id)
@@ -91,7 +91,7 @@ public class GoodsRepository : IGoodsRepository
         return good.Id;
     }
 
-    public async Task<GoodScope> GetScopeAsync(Guid goodId, int litre)
+    public async Task<GoodScope> GetScopeAsync(Guid goodId, int litre, CancellationToken cancellationToken = default)
     {
         var pExistsGoodScope = await _context.GoodScopes
                 .FirstOrDefaultAsync(gs => gs.GoodId == goodId && gs.Litre == litre);
@@ -99,7 +99,7 @@ public class GoodsRepository : IGoodsRepository
         return _mapper.Map<GoodScope>(pExistsGoodScope);
     }
 
-    public async Task<Guid> AddScopeAsync(GoodScope goodScope)
+    public async Task<Guid> AddScopeAsync(GoodScope goodScope, CancellationToken cancellationToken = default)
     {
         var scopeEntity = new GoodScopeEntity
         {
@@ -116,7 +116,7 @@ public class GoodsRepository : IGoodsRepository
         return scopeEntity.Id;
     }
 
-    public async Task<Guid> UpdateScopeAsync(GoodScope goodScope)
+    public async Task<Guid> UpdateScopeAsync(GoodScope goodScope, CancellationToken cancellationToken = default)
     {
         var existingGoodScope = await _context.GoodScopes
             .AsNoTracking()

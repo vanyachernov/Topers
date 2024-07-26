@@ -17,17 +17,21 @@ public class AccountController(
     private readonly CookiesOptions _cookieOptions = options.Value;
     
     [HttpPost("register")]
-    public async Task<IResult> Register([FromBody] RegisterUserRequestDto request)
+    public async Task<IResult> Register(
+        [FromBody] RegisterUserRequestDto request,
+        CancellationToken cancellationToken)
     {
-        await _userService.Register(request.Username, request.Email, request.Password);
+        await _userService.Register(request.Username, request.Email, request.Password, cancellationToken);
 
         return Results.Ok();
     }
 
     [HttpPost("login")]
-    public async Task<IResult> Login([FromBody] LoginUserRequestDto request)
+    public async Task<IResult> Login(
+        [FromBody] LoginUserRequestDto request,
+        CancellationToken cancellationToken)
     {
-        var token = await _userService.Login(request.Username, request.Password);
+        var token = await _userService.Login(request.Username, request.Password, cancellationToken);
 
         HttpContext.Response.Cookies.Append(_cookieOptions.Name, token);
 

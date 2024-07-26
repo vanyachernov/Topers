@@ -17,7 +17,7 @@ public class CategoriesRepository : ICategoriesRepository
         _mapper = mapper;
     }
 
-    public async Task<Guid> CreateAsync(Category category)
+    public async Task<Guid> CreateAsync(Category category, CancellationToken cancellationToken = default)
     {
         var categoryEntity = new CategoryEntity
         {
@@ -32,7 +32,7 @@ public class CategoriesRepository : ICategoriesRepository
         return categoryEntity.Id;
     }
 
-    public async Task<Guid> DeleteAsync(Guid categoryId)
+    public async Task<Guid> DeleteAsync(Guid categoryId, CancellationToken cancellationToken = default)
     {
         await _context.Categories
             .Where(c => c.Id == categoryId)
@@ -41,7 +41,7 @@ public class CategoriesRepository : ICategoriesRepository
         return categoryId;
     }
 
-    public async Task<List<Category>> GetAllAsync()
+    public async Task<List<Category>> GetAllAsync(CancellationToken cancellationToken = default)
     {
         var categoryEntities = await _context.Categories
             .AsNoTracking()
@@ -52,7 +52,7 @@ public class CategoriesRepository : ICategoriesRepository
         return categoryEntitiesDto;
     }
 
-    public async Task<Category> GetByIdAsync(Guid categoryId)
+    public async Task<Category> GetByIdAsync(Guid categoryId, CancellationToken cancellationToken = default)
     {
         var categoryEntity = await _context.Categories
             .AsNoTracking()
@@ -63,7 +63,7 @@ public class CategoriesRepository : ICategoriesRepository
         return categoryEntityDto;
     }
 
-    public async Task<List<Good>> GetGoodsByIdAsync(Guid categoryId)
+    public async Task<List<Good>> GetGoodsByIdAsync(Guid categoryId, CancellationToken cancellationToken = default)
     {
         var goodEntities = await _context.Goods
             .Where(g => g.CategoryId == categoryId)
@@ -74,7 +74,7 @@ public class CategoriesRepository : ICategoriesRepository
         return goodEntitiesDto;
     }
 
-    public async Task<Guid> UpdateAsync(Category category)
+    public async Task<Guid> UpdateAsync(Category category, CancellationToken cancellationToken = default)
     {
         await _context.Categories
             .Where(c => c.Id == category.Id)

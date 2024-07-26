@@ -13,7 +13,7 @@ public class AddressesService : IAddressesService
         _addressesRepository = addressesRepository;
     }
 
-    public async Task<AddressResponseDto> AddAddressToCustomerAsync(Address address)
+    public async Task<AddressResponseDto> AddAddressToCustomerAsync(Address address, CancellationToken cancellationToken = default)
     {
         var addressEntityIdentifier = await _addressesRepository.CreateAsync(address);
 

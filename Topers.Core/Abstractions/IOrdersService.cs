@@ -5,10 +5,10 @@ using Topers.Core.Models;
 
 public interface IOrdersService
 {
-    Task<List<OrderResponseDto>> GetAllOrdersAsync();
-    Task<OrderResponseDto> GetOrderByIdAsync(Guid orderId);
-    Task<OrderResponseDto> CreateOrderAsync(Order order);
-    Task<Guid> UpdateOrderAsync(Order order);
-    Task<Guid> DeleteOrderAsync(Guid orderId);
-    Task<Guid> AddGoodToOrderAsync(OrderDetails detail, GoodScope good);
+    Task<List<OrderResponseDto>> GetAllOrdersAsync(CancellationToken cancellationToken = default);
+    Task<OrderResponseDto> GetOrderByIdAsync(Guid orderId, CancellationToken cancellationToken = default);
+    Task<OrderResponseDto> CreateOrderAsync(Order order, CancellationToken cancellationToken = default);
+    Task<Guid> UpdateOrderAsync(Order order, CancellationToken cancellationToken = default);
+    Task<Guid> DeleteOrderAsync(Guid orderId, CancellationToken cancellationToken = default);
+    Task<Guid> AddGoodToOrderAsync(OrderDetails detail, GoodScope good, CancellationToken cancellationToken = default);
 };

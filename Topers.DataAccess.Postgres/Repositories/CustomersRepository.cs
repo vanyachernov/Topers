@@ -17,7 +17,7 @@ public class CustomersRepository : ICustomersRepository
         _mapper = mapper;
     }
 
-    public async Task<Guid> CreateAsync(Customer customer)
+    public async Task<Guid> CreateAsync(Customer customer, CancellationToken cancellationToken = default)
     {
         var customerEntity = new CustomerEntity
         {
@@ -33,7 +33,7 @@ public class CustomersRepository : ICustomersRepository
         return customerEntity.Id;
     }
 
-    public async Task<List<Customer>> GetAllAsync()
+    public async Task<List<Customer>> GetAllAsync(CancellationToken cancellationToken = default)
     {
         var customerEntities = await _context.Customers
             .Include(c => c.Address)
@@ -45,7 +45,7 @@ public class CustomersRepository : ICustomersRepository
         return customerEntitiesDto;
     }
 
-    public async Task<Customer> GetByIdAsync(Guid customerId)
+    public async Task<Customer> GetByIdAsync(Guid customerId, CancellationToken cancellationToken = default)
     {
         var customerEntity = await _context.Customers
             .Include(c => c.Address)

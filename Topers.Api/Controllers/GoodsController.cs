@@ -49,7 +49,9 @@ public class GoodsController(
     [HttpPost("create")]
     [SwaggerResponse(200, Description = "Create a new good.")]
     [SwaggerResponse(400, Description = "There are some errors in the model.")]
-    public async Task<ActionResult<GoodResponseDto>> CreateGood([FromBody] GoodRequestDto good)
+    public async Task<ActionResult<GoodResponseDto>> CreateGood(
+        [FromBody] GoodRequestDto good,
+        CancellationToken cancellationToken)
     {
         var newGoodValidator = new GoodDtoValidator();
 
@@ -68,7 +70,7 @@ public class GoodsController(
             good.Description
         );
 
-        var newGoodEntity = await _goodService.CreateGoodAsync(newGood);
+        var newGoodEntity = await _goodService.CreateGoodAsync(newGood, cancellationToken);
 
         return Ok(newGoodEntity);
     }
@@ -76,7 +78,10 @@ public class GoodsController(
     [HttpPut("{goodId:guid}")]
     [SwaggerResponse(200, Description = "Update an existing good.")]
     [SwaggerResponse(400, Description = "There are some errors in the model.")]
-    public async Task<ActionResult<GoodResponseDto>> UpdateGood([FromRoute] Guid goodId, [FromBody] GoodRequestDto good)
+    public async Task<ActionResult<GoodResponseDto>> UpdateGood(
+        [FromRoute] Guid goodId, 
+        [FromBody] GoodRequestDto good,
+        CancellationToken cancellationToken)
     {
         var goodValidator = new GoodDtoValidator();
 
@@ -95,22 +100,27 @@ public class GoodsController(
             good.Description
         );
 
-        var updatedGood = await _goodService.UpdateGoodAsync(existGood);
+        var updatedGood = await _goodService.UpdateGoodAsync(existGood, cancellationToken);
 
         return Ok(updatedGood);
     }
 
     [HttpDelete("{goodId:guid}")]
     [SwaggerResponse(200, Description = "Delete good.")]
-    public async Task<ActionResult<Guid>> DeleteGood([FromRoute] Guid goodId)
+    public async Task<ActionResult<Guid>> DeleteGood(
+        [FromRoute] Guid goodId,
+        CancellationToken cancellationToken)
     {
-        await _goodService.DeleteGoodAsync(goodId);
+        await _goodService.DeleteGoodAsync(goodId, cancellationToken);
 
         return Ok(goodId);
     }
 
     [HttpPost("{goodId:guid}/addScope")]
-    public async Task<ActionResult<Guid>> AddGoodScope([FromRoute] Guid goodId, [FromForm] GoodScopeRequestDto scope)
+    public async Task<ActionResult<Guid>> AddGoodScope(
+        [FromRoute] Guid goodId, 
+        [FromForm] GoodScopeRequestDto scope,
+        CancellationToken cancellationToken)
     {
         if (scope.ImageFile == null)
         {
@@ -132,9 +142,9 @@ public class GoodsController(
             scope.ImageName
         );
 
-        var isUpdated = await _goodService.IsGoodScopeExistsAsync(goodId, scopeModel.Litre);
+        var isUpdated = await _goodService.IsGoodScopeExistsAsync(goodId, scopeModel.Litre, cancellationToken);
 
-        var newScopeIdentifier = (!isUpdated) ? await _goodService.AddGoodScopeAsync(scopeModel) : await _goodService.UpdateGoodScopeAsync(scopeModel);
+        var newScopeIdentifier = (!isUpdated) ? await _goodService.AddGoodScopeAsync(scopeModel, cancellationToken) : await _goodService.UpdateGoodScopeAsync(scopeModel, cancellationToken);
 
         return Ok(newScopeIdentifier);
     }

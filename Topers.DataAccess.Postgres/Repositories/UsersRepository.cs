@@ -18,7 +18,7 @@ public class UsersRepository : IUsersRepository
         _mapper = mapper;
     }
 
-    public async Task Add(User user)
+    public async Task Add(User user, CancellationToken cancellationToken = default)
     {
         var userEntity = new UserEntity()
         {
@@ -32,7 +32,7 @@ public class UsersRepository : IUsersRepository
         await _context.SaveChangesAsync();
     }
 
-    public async Task<User> GetByName(string username)
+    public async Task<User> GetByName(string username, CancellationToken cancellationToken = default)
     {
         var userEntity = await _context.Users
             .AsNoTracking()

@@ -16,9 +16,9 @@ public class CustomersController(ICustomersService customerService) : Controller
     [HttpGet]
     [SwaggerResponse(200, Description = "Returns a customer list.", Type = typeof(IEnumerable<CustomerResponseDto>))]
     [SwaggerResponse(400, Description = "Customers not found.")]
-    public async Task<ActionResult<List<CustomerResponseDto>>> GetCustomers()
+    public async Task<ActionResult<List<CustomerResponseDto>>> GetCustomers(CancellationToken cancellationToken)
     {
-        var customers = await _customerService.GetAllCustomersAsync();
+        var customers = await _customerService.GetAllCustomersAsync(cancellationToken);
 
         if (customers == null)
         {
@@ -31,9 +31,11 @@ public class CustomersController(ICustomersService customerService) : Controller
     [HttpGet("{customerId:guid}")]
     [SwaggerResponse(200, Description = "Returns a customer.", Type = typeof(CustomerResponseDto))]
     [SwaggerResponse(400, Description = "Customer not found.")]
-    public async Task<ActionResult<CustomerResponseDto>> GetCustomerById([FromRoute] Guid customerId)
+    public async Task<ActionResult<CustomerResponseDto>> GetCustomerById(
+        [FromRoute] Guid customerId, 
+        CancellationToken cancellationToken)
     {
-        var customer = await _customerService.GetCustomerByIdAsync(customerId);
+        var customer = await _customerService.GetCustomerByIdAsync(customerId, cancellationToken);
 
         if (customer == null)
         {
@@ -46,7 +48,9 @@ public class CustomersController(ICustomersService customerService) : Controller
     [HttpPost("create")]
     [SwaggerResponse(200, Description = "Create a new customer.")]
     [SwaggerResponse(400, Description = "There are some errors in the model.")]
-    public async Task<ActionResult<Guid>> CreateCustomer([FromBody] CustomerRequestDto customer)
+    public async Task<ActionResult<Guid>> CreateCustomer(
+        [FromBody] CustomerRequestDto customer,
+        CancellationToken cancellationToken)
     {
         var newCustomerValidator = new CustomerDtoValidator();
         
@@ -66,7 +70,7 @@ public class CustomersController(ICustomersService customerService) : Controller
             customer.Phone
         );
 
-        var newCustomerEntity = await _customerService.CreateCustomerAsync(newCustomer);
+        var newCustomerEntity = await _customerService.CreateCustomerAsync(newCustomer, cancellationToken);
 
         return Ok(newCustomerEntity);
     }
