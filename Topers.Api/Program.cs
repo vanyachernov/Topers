@@ -1,4 +1,4 @@
-using Topers.Api.Extenstions;
+using Topers.Api.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 {

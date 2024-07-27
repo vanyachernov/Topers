@@ -1,4 +1,4 @@
-namespace Topers.Api.Extenstions;
+namespace Topers.Api.Extensions;
 
 using Topers.Infrastructure.Features;
 using Microsoft.IdentityModel.Tokens;

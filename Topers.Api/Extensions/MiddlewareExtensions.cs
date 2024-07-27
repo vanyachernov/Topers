@@ -1,4 +1,4 @@
-namespace Topers.Api.Extenstions;
+namespace Topers.Api.Extensions;
 
 using System.Globalization;
 using Microsoft.AspNetCore.Localization;
