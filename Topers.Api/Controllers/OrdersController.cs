@@ -96,7 +96,7 @@ namespace Topers.Api.Controllers
         [SwaggerResponse(400, Description = "There are some errors in the model.")]
         public async Task<ActionResult<OrderResponseDto>> AddProductToOrder(
             [FromRoute] Guid orderId,
-            [FromBody] AddProductToOrderRequestDto orderDetail,
+            [FromBody] AddProductRequestDto orderDetail,
             CancellationToken cancellationToken
         )
         {
