@@ -16,54 +16,76 @@ public class GoodsService : IGoodsService
         _mapper = mapper;
     }
 
-    public async Task<GoodResponseDto> CreateGoodAsync(Good good, CancellationToken cancellationToken = default)
+    public async Task<GoodResponseDto> CreateGoodAsync(
+        Good good,
+        CancellationToken cancellationToken = default
+    )
     {
-        var newGoodIdentifier = await _goodsRepository.CreateAsync(good);
+        var newGoodIdentifier = await _goodsRepository.CreateAsync(good, cancellationToken);
 
-        var newGood = new GoodResponseDto
-        (
-            newGoodIdentifier,
-            good.Name,
-            good.Description,
-            null
-        );
+        var newGood = new GoodResponseDto(newGoodIdentifier, good.Name, good.Description, null);
 
         return newGood;
     }
 
-    public async Task<Guid> DeleteGoodAsync(Guid goodId, CancellationToken cancellationToken = default)
+    public async Task<Guid> DeleteGoodAsync(
+        Guid goodId,
+        CancellationToken cancellationToken = default
+    )
     {
-        return await _goodsRepository.DeleteAsync(goodId);
+        return await _goodsRepository.DeleteAsync(goodId, cancellationToken);
     }
 
-    public async Task<List<GoodResponseDto>> GetAllGoodsAsync(CancellationToken cancellationToken = default)
+    public async Task<List<GoodResponseDto>> GetAllGoodsAsync(
+        CancellationToken cancellationToken = default
+    )
     {
-        return _mapper.Map<List<GoodResponseDto>>(await _goodsRepository.GetAllAsync());
+        return _mapper.Map<List<GoodResponseDto>>(
+            await _goodsRepository.GetAllAsync(cancellationToken)
+        );
     }
 
-    public async Task<GoodResponseDto> GetGoodByIdAsync(Guid goodId, CancellationToken cancellationToken = default)
+    public async Task<GoodResponseDto> GetGoodByIdAsync(
+        Guid goodId,
+        CancellationToken cancellationToken = default
+    )
     {
-        return _mapper.Map<GoodResponseDto>(await _goodsRepository.GetByIdAsync(goodId));
+        return _mapper.Map<GoodResponseDto>(
+            await _goodsRepository.GetByIdAsync(goodId, cancellationToken)
+        );
     }
 
-    public async Task<Guid> UpdateGoodAsync(Good good, CancellationToken cancellationToken = default)
+    public async Task<Guid> UpdateGoodAsync(
+        Good good,
+        CancellationToken cancellationToken = default
+    )
     {
-        return await _goodsRepository.UpdateAsync(good);
+        return await _goodsRepository.UpdateAsync(good, cancellationToken);
     }
 
-    public async Task<Guid> AddGoodScopeAsync(GoodScope scope, CancellationToken cancellationToken = default)
+    public async Task<Guid> AddGoodScopeAsync(
+        GoodScope scope,
+        CancellationToken cancellationToken = default
+    )
     {
-        return await _goodsRepository.AddScopeAsync(scope);
+        return await _goodsRepository.AddScopeAsync(scope, cancellationToken);
     }
 
-    public async Task<Guid> UpdateGoodScopeAsync(GoodScope scope, CancellationToken cancellationToken = default)
+    public async Task<Guid> UpdateGoodScopeAsync(
+        GoodScope scope,
+        CancellationToken cancellationToken = default
+    )
     {
-        return await _goodsRepository.UpdateScopeAsync(scope);
+        return await _goodsRepository.UpdateScopeAsync(scope, cancellationToken);
     }
 
-    public async Task<bool> IsGoodScopeExistsAsync(Guid goodId, int litre, CancellationToken cancellationToken = default)
+    public async Task<bool> IsGoodScopeExistsAsync(
+        Guid goodId,
+        int litre,
+        CancellationToken cancellationToken = default
+    )
     {
-        var existingScope = await _goodsRepository.GetScopeAsync(goodId, litre);
+        var existingScope = await _goodsRepository.GetScopeAsync(goodId, litre, cancellationToken);
 
         return existingScope != null;
     }
