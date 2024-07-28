@@ -1,22 +1,21 @@
+using Topers.Api.Extensions;
+
 var builder = WebApplication.CreateBuilder(args);
 {
-    builder.Services.AddEndpointsApiExplorer();
-    builder.Services.AddSwaggerGen();
+    var configuration = builder.Configuration;
+    var services = builder.Services;
+
+    services.AddEndpointsApiExplorer();
+    services.AddSwaggerGen();
+    services.AddControllers();
+    services.AddCustomServices(configuration);
+    services.AddCustomAuthentication(configuration);
+    services.AddAuthorization();
 };
 
 var app = builder.Build();
 {
-    if (app.Environment.IsDevelopment())
-    {
-        app.UseSwagger();
-        app.UseSwaggerUI(options =>
-        {
-            options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
-            options.DocumentTitle = "Topers API";
-            options.RoutePrefix = string.Empty;
-        });
-    }
-
-    app.UseHttpsRedirection();
+    app.UseCustomMiddlewares(app.Environment);
+    app.MapControllers();
     app.Run();
 }
