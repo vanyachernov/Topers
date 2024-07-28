@@ -5,7 +5,7 @@ public record CartResponseDto(
     Guid CustomerId,
     DateTime CreatedDate,
     DateTime UpdatedDate,
-    List<CartItemResponseDto>? OrderDetails = null
+    List<CartItemResponseDto>? CartDetails = null
 );
 
 public record CartRequestDto(

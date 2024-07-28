@@ -27,6 +27,7 @@ public static class ServiceExtensions
         services.AddScoped<IGoodsRepository, GoodsRepository>();
         services.AddScoped<IUsersRepository, UsersRepository>();
         services.AddScoped<IOrdersRepository, OrdersRepository>();
+        services.AddScoped<ICartsRepository, CartsRepository>();
 
         services.AddScoped<ICategoriesService, CategoriesService>();
         services.AddScoped<IAddressesService, AddressesService>();
@@ -34,6 +35,7 @@ public static class ServiceExtensions
         services.AddScoped<IGoodsService, GoodsService>();
         services.AddScoped<IUsersService, UsersService>();
         services.AddScoped<IOrdersService, OrdersService>();
+        services.AddScoped<ICartsService, CartsService>();
 
         services.AddScoped<IPasswordHasher, PasswordHasher>();
         services.AddScoped<IJwtProvider, JwtProvider>();

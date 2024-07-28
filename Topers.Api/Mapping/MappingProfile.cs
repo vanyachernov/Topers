@@ -33,11 +33,28 @@ public class MappingProfile : Profile
                     )
             );
 
-        CreateMap<OrderDetailsEntity, OrderDetails>()
+        CreateMap<CartItemEntity, CartItems>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+            .ForMember(dest => dest.CartId, opt => opt.MapFrom(src => src.CartId))
             .ForMember(dest => dest.GoodId, opt => opt.MapFrom(src => src.GoodId))
             .ForMember(dest => dest.Quantity, opt => opt.MapFrom(src => src.Quantity))
             .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.Price));
+
+        CreateMap<CartEntity, Cart>()
+            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+            .ForMember(dest => dest.CustomerId, opt => opt.MapFrom(src => src.CustomerId))
+            .ForMember(dest => dest.CreatedDate, opt => opt.MapFrom(src => src.CreatedDate))
+            .ForMember(dest => dest.UpdatedDate, opt => opt.MapFrom(src => src.UpdatedDate));
+
+        CreateMap<Cart, CartResponseDto>()
+            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+            .ForMember(dest => dest.CustomerId, opt => opt.MapFrom(src => src.CustomerId))
+            .ForMember(dest => dest.CreatedDate, opt => opt.MapFrom(src => src.CreatedDate))
+            .ForMember(dest => dest.UpdatedDate, opt => opt.MapFrom(src => src.UpdatedDate))
+            .ForMember(dest => dest.CartDetails, opt => opt.MapFrom(src => src.CartDetails));
+
+        CreateMap<CartItems, CartItemResponseDto>()
+            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id));
 
         CreateMap<OrderEntity, Order>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))

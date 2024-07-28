@@ -32,4 +32,9 @@ public class Cart
     /// Gets a cart updated date.
     /// </summary>
     public DateTime UpdatedDate { get; }
+
+    /// <summary>
+    ///  Gets or sets a good scopes.
+    /// </summary>
+    public ICollection<CartItems> CartDetails { get; set; }
 }
