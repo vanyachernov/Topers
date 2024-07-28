@@ -14,6 +14,8 @@ public class TopersDbContext(DbContextOptions<TopersDbContext> options) : DbCont
     public DbSet<CustomerEntity> Customers { get; set; }
     public DbSet<OrderEntity> Orders { get; set; }
     public DbSet<OrderDetailsEntity> OrderDetails { get; set; }
+    public DbSet<CartEntity> Cart { get; set; }
+    public DbSet<CartItemEntity> CartDetails { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

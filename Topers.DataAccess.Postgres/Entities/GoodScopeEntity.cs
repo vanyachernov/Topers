@@ -48,4 +48,5 @@ public class GoodScopeEntity
     /// Gets or sets an order details about good.
     /// </summary>
     public ICollection<OrderDetailsEntity>? OrderDetails { get; set; } = [];
+    public ICollection<CartItemEntity>? CartDetails { get; set; } = [];
 }
