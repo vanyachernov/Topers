@@ -31,6 +31,11 @@ public class CustomerEntity
     public AddressEntity? Address { get; set; }
 
     /// <summary>
+    /// Gets or sets a customer cart.
+    /// </summary>
+    public CartEntity? Cart { get; set; }
+
+    /// <summary>
     /// Gets or sets a customer orders.
     /// </summary>
     public ICollection<OrderEntity> Orders { get; set; } = [];
